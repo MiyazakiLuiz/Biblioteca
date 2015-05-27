@@ -18,6 +18,7 @@ import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 /**
  *
@@ -25,7 +26,10 @@ import java.util.Comparator;
  */
 public class Funcionalidades 
 {
+    //Locale france = new Locale.Builder().setLanguage("fr").setRegion("CA").build();
+    //Locale japan = new Locale.Builder().setLanguage("ja").setScript("Kana").build();
     
+    Locale japan = new Locale("ja");
         
     private static ArrayList<Pessoa> listNome = new ArrayList<Pessoa>();
     private static ArrayList<Livro> listLivros = new ArrayList<Livro>();
