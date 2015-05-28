@@ -36,17 +36,17 @@ public class Funcionalidades
     private static ArrayList<Pessoa> listNome = new ArrayList<Pessoa>();
     private static ArrayList<Livro> listLivros = new ArrayList<Livro>();
     
+    private boolean readOnly = false;
+    private String lang;
+    private String country;
     
-    String lang;
-    String country;
+    private Locale currentLocale;
     
-    Locale currentLocale;
+    private ResourceBundle messages;
     
-    ResourceBundle messages;
+    private Calendar calendarioN = Calendar.getInstance();
     
-    Calendar calendarioN = Calendar.getInstance();
-    
-    Calendar calendarioV = Calendar.getInstance();
+    private Calendar calendarioV = Calendar.getInstance();
     
     private int diaAtual;
     private int mesAtual;
@@ -58,6 +58,12 @@ public class Funcionalidades
     
     private int diferencaDias = 0;
     
+    
+    public boolean getReadOnly()
+    {
+        return this.readOnly;
+    }
+    
     public ResourceBundle getMessages()
     {
         return this.messages;
@@ -66,6 +72,11 @@ public class Funcionalidades
     
     public boolean removePessoa(String a)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return false;
+        }
         String str;
         Pessoa rem = null;
         Livro rem2 = null;
@@ -147,6 +158,11 @@ public class Funcionalidades
     
     public void adicionaLivro(String nome, boolean empr, int diasParaDevolver, boolean text, String dono)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return;
+        }
         boolean encontrou = false;
         for(Livro aux: listLivros)
         {
@@ -169,6 +185,11 @@ public class Funcionalidades
     } 
     public void adicionaProfessor(String nome, int livros, boolean sus, int susD)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return;
+        }
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
@@ -190,6 +211,11 @@ public class Funcionalidades
     
     public void adicionaAluno(String nome, int livros, boolean sus, int susD)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return;
+        }
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
@@ -211,6 +237,11 @@ public class Funcionalidades
     
     public void adicionaComunidade(String nome, int livros, boolean sus, int susD)
     {   
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return;
+        }
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
@@ -232,6 +263,11 @@ public class Funcionalidades
     
     public boolean emprestarLivro(String nomePessoa, String nomeLivro)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return false;
+        }
         Pessoa Pessoa = null;
         Livro Livro = null;
         
@@ -329,6 +365,11 @@ public class Funcionalidades
     
     public boolean devolverLivro(String nomePessoa, String nomeLivro)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return false;
+        }
         Pessoa Pessoa = null;
         Livro Livro = null;
         
@@ -564,7 +605,26 @@ public class Funcionalidades
         
     }
     
-    public int calculaDiferenca()
+    public void calcDifLivros(int a)
+    {
+        
+    }
+   
+    public void verInfoLivrosEmprestados()
+    {
+        for(Livro aux : listLivros)
+        {
+            if(aux.getEmpr() == true)
+            {
+                System.out.println(aux.getNome());
+                System.out.println(aux.getAtualDono());
+                this.calcDifLivros(aux.getDias());
+            }
+        }
+    }
+   
+    
+    /*public int calculaDiferenca()
     {
         if(this.calendarioN.compareTo(this.calendarioV) == 0)
         {
@@ -575,7 +635,7 @@ public class Funcionalidades
             this.diferencaDias = ((this.anoAtual - this.anoAntigo) * 365);
             if(this.mesAtual < this.mesAntigo)
             {
-                this.diferencaDias += (this.mesAntigo - this.mesAtual) * 30;
+                this.diferencaDias -= (this.mesAntigo - this.mesAtual) * 30;
             }
             else
             {
@@ -610,15 +670,21 @@ public class Funcionalidades
             System.out.println(this.diferencaDias);
             return this.diferencaDias;
         }
+    }*/
+    
+    public int calculaDiferenca()
+    {
+        this.diferencaDias += (this.anoAtual - this.anoAntigo) * 365;
+        this.diferencaDias += (this.mesAtual - this.mesAntigo) * 30;
+        this.diferencaDias += this.diaAtual - this.diaAntigo;
+        System.out.println(this.diferencaDias);
+        return this.diferencaDias;
     }
     
     
     public void atualizaDias(int a)
     {
         int teste;
-        
-        
-        
         
         for(Pessoa aux : listNome)
         {
@@ -669,9 +735,39 @@ public class Funcionalidades
     }
     
     
+    public boolean digitaDias()
+    {
+        Scanner s = new Scanner(System.in);
+        int valor = 0;
+        System.out.println(messages.getString("escolhedia"));
+        valor = s.nextInt();
+        if(valor != 0 && valor > 0 && valor < 31)
+        {
+            this.diaAtual = valor;
+            valor = s.nextInt();
+            if(valor != 0 && valor > 0 && valor < 13)
+            {
+                this.mesAtual = valor;
+                valor = s.nextInt();
+                if(valor != 0 && valor > 0)
+                {
+                    this.anoAtual = valor;
+                    return true;
+                }
+                
+            }
+            
+        }
+        return false;
+            
+    }
+        
+    
+    
     public Funcionalidades (String listaPessoa, String listaLivro, String data) 
     {
         int dif;
+        boolean teste;
         Scanner novo = new Scanner(System.in);
         System.out.println("Digite o código da língua e do país: ");
         this.lang = novo.nextLine();
@@ -690,9 +786,23 @@ public class Funcionalidades
         this.preparaListaNome(listaPessoa);
         this.preparaListaLivro(listaLivro);
         this.preparaDataAntiga(data);
-        this.preparaDataAtual();
+        teste = this.digitaDias();
+        if(teste == false)
+        {
+            this.preparaDataAtual();
+        }
+        
         dif = this.calculaDiferenca();
-        this.atualizaDias(dif);
+        if(dif < 0)
+        {
+            this.readOnly = true;
+        }
+        //else
+        //{
+            this.atualizaDias(dif);
+        //}
+        
+        
         
         
         
