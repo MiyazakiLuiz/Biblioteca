@@ -19,6 +19,8 @@ import static java.util.Calendar.YEAR;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 
 /**
  *
@@ -29,10 +31,19 @@ public class Funcionalidades
     //Locale france = new Locale.Builder().setLanguage("fr").setRegion("CA").build();
     //Locale japan = new Locale.Builder().setLanguage("ja").setScript("Kana").build();
     
-    Locale japan = new Locale("ja");
+    //Locale japan = new Locale("ja");
         
     private static ArrayList<Pessoa> listNome = new ArrayList<Pessoa>();
     private static ArrayList<Livro> listLivros = new ArrayList<Livro>();
+    
+    
+    String lang;
+    String country;
+    
+    Locale currentLocale;
+    
+    ResourceBundle messages;
+    
     Calendar calendarioN = Calendar.getInstance();
     
     Calendar calendarioV = Calendar.getInstance();
@@ -47,6 +58,10 @@ public class Funcionalidades
     
     private int diferencaDias = 0;
     
+    public ResourceBundle getMessages()
+    {
+        return this.messages;
+    }
     
     
     public boolean removePessoa(String a)
@@ -650,6 +665,21 @@ public class Funcionalidades
     public Funcionalidades (String listaPessoa, String listaLivro, String data) 
     {
         int dif;
+        Scanner novo = new Scanner(System.in);
+        System.out.println("Digite o código da língua e do país: ");
+        this.lang = novo.nextLine();
+        this.country = novo.nextLine();
+        if(this.lang.length() != 2 || this.country.length() != 2)
+        {
+            currentLocale = new Locale("en", "US");
+        }
+        else
+        {
+            currentLocale = new Locale(lang, country);
+        }
+        messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
+        System.out.println(messages.getString("oi"));
+        
         this.preparaListaNome(listaPessoa);
         this.preparaListaLivro(listaLivro);
         this.preparaDataAntiga(data);
