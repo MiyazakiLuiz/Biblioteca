@@ -25,7 +25,7 @@ public class Main
         Funcionalidades biblioteca = new Funcionalidades(a, b, c); 
         boolean ciclo = true;
         messages = biblioteca.getMessages();
-        System.out.println(messages.getString("oi"));
+        //System.out.println(messages.getString("oi"));
         
 
         while (ciclo)
