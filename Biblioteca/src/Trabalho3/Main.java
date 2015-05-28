@@ -1,15 +1,16 @@
 package Trabalho3;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
 public class Main 
 {
-    
     public static void main(String args[]) throws IOException
     {
+        ResourceBundle messages;
         int escolha = 1;
         String str, str2;
         boolean correto;
@@ -23,6 +24,8 @@ public class Main
         
         Funcionalidades biblioteca = new Funcionalidades(a, b, c); 
         boolean ciclo = true;
+        messages = biblioteca.getMessages();
+        System.out.println(messages.getString("oi"));
         
 
         while (ciclo)
