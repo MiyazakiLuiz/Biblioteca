@@ -130,6 +130,10 @@ public class Main
                                  break;
 
                              case 5:
+                                 System.out.println(messages.getString("dnp1"));
+                                 str = t.nextLine();
+                                 biblioteca.numeroAtualDeLivros(str);
+                                 
                                  break;
 
                              case 6: 
