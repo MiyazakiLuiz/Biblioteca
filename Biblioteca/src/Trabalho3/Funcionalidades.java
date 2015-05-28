@@ -685,7 +685,7 @@ public class Funcionalidades
             currentLocale = new Locale(lang, country);
         }
         messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
-        System.out.println(messages.getString("oi"));
+        //System.out.println(messages.getString("oi"));
         
         this.preparaListaNome(listaPessoa);
         this.preparaListaLivro(listaLivro);
