@@ -32,11 +32,11 @@ public class Main
         {
             
            
-                System.out.println("Escolha o item desejado: ");
-                System.out.println("1 - Pessoa");
-                System.out.println("2 - Livro");
-                System.out.println("3 - Datas");
-                System.out.println("4 - Fechar programa");
+                System.out.println(messages.getString("choose1"));
+                System.out.println(messages.getString("1pessoa"));
+                System.out.println(messages.getString("2livro"));
+                System.out.println(messages.getString("3data"));
+                System.out.println(messages.getString("4fechar"));
 
                 if(s.hasNextInt())
                 {
@@ -54,12 +54,12 @@ public class Main
                 switch (escolha)
                 {
                     case 1:
-                        System.out.println("1 - Inserir uma pessoa");
-                        System.out.println("2 - Ordenar a lista de pessoas");
-                        System.out.println("3 - Imprimir a lista de pessoas");
-                        System.out.println("4 - Remover uma pessoa da lista");
-                        System.out.println("5 - Livros com a pessoa");
-                        System.out.println("6 - Voltar");
+                        System.out.println(messages.getString("11p"));
+                        System.out.println(messages.getString("12o"));
+                        System.out.println(messages.getString("13p"));
+                        System.out.println(messages.getString("14r"));
+                        System.out.println(messages.getString("15l"));
+                        System.out.println(messages.getString("16v"));
 
                         if(s.hasNextInt())
                         {
@@ -73,11 +73,11 @@ public class Main
                         switch (escolha)
                         {
                              case 1:
-                                System.out.println("1 - Professor");
-                                System.out.println("2 - Aluno");
-                                System.out.println("3 - Comunidade");
+                                System.out.println(messages.getString("111p"));
+                                System.out.println(messages.getString("112a"));
+                                System.out.println(messages.getString("113c"));
                                 escolha = s.nextInt();
-                                System.out.println("Digite o nome da pessoa:");
+                                System.out.println(messages.getString("1111d"));
                                 str = t.nextLine();
 
                                 if(escolha == 1)
@@ -94,7 +94,7 @@ public class Main
                                     biblioteca.adicionaComunidade(str, 0, false, 0);
                                 }
 
-                                System.out.println("Pessoa inserida com sucesso!");
+                                System.out.println(messages.getString("pics1"));
                                 System.out.println();
 
                                 break;
@@ -102,7 +102,7 @@ public class Main
                              case 2:
 
                                  biblioteca.ordenaListaNome();
-                                 System.out.println("Lista de nomes ordenada com sucesso");
+                                 System.out.println(messages.getString("lno1"));
                                  System.out.println();
                                  break;
 
@@ -113,17 +113,17 @@ public class Main
                                  break;
 
                              case 4:
-                                 System.out.println("Digite o nome da pessoa que sera removida:");
+                                 System.out.println(messages.getString("dnpr1"));
                                  str = t.nextLine();
 
                                  correto = biblioteca.removePessoa(str);
                                  if(correto)
                                  {
-                                     System.out.println("A pessoa foi removida com sucesso");
+                                     System.out.println(messages.getString("prcs1"));
                                  }
                                  else
                                  {
-                                     System.out.println("ERRO! Nome inexistente");
+                                     System.out.println(messages.getString("err1"));
                                  }
 
                                  System.out.println();
@@ -135,19 +135,19 @@ public class Main
                              case 6: 
                                  break;
                              default:
-                                 System.out.println("\nO que esta fazendo, parca? Isso foi um comando invalido!\n");
+                                 System.out.println(messages.getString("eegg"));
                                  break;
                         }
                         break;
 
                     case 2:
-                        System.out.println("1 - Inserir um livro");
-                        System.out.println("2 - Ordenar a lista de livro");
-                        System.out.println("3 - Imprimir a lista de livro");
-                        System.out.println("4 - Emprestar livro");
-                        System.out.println("5 - Receber livro");
-                        System.out.println("6 - Remover um livro da lista");
-                        System.out.println("7 - Voltar");
+                        System.out.println(messages.getString("21i"));
+                        System.out.println(messages.getString("22o"));
+                        System.out.println(messages.getString("23i"));
+                        System.out.println(messages.getString("24e"));
+                        System.out.println(messages.getString("25r"));
+                        System.out.println(messages.getString("26r"));
+                        System.out.println(messages.getString("27v"));
 
                         if(s.hasNextInt())
                         {
@@ -161,13 +161,13 @@ public class Main
                         switch (escolha)
                         {
                              case 1:
-                                 System.out.println("Digite o titulo do livro:");
+                                 System.out.println(messages.getString("dtl1"));
 
                                  str = t.nextLine();
 
-                                 System.out.println("Tipo do livro:");
-                                 System.out.println("1. Texto");
-                                 System.out.println("2. Nao texto");
+                                 System.out.println(messages.getString("tl"));
+                                 System.out.println(messages.getString("tl1"));
+                                 System.out.println(messages.getString("tl2"));
 
 
                                  escolha = s.nextInt();
@@ -183,7 +183,7 @@ public class Main
                              case 2:
 
                                  biblioteca.ordenaListaLivro();
-                                 System.out.println("Lista de livros ordenadas com sucesso");
+                                 System.out.println(messages.getString("lvos1"));
                                  System.out.println();
                                  break;
 
@@ -196,12 +196,12 @@ public class Main
 
                              case 4:
 
-                                 System.out.println("Digite o nome da pessoa:");
+                                 System.out.println(messages.getString("dnp1"));
                                  str = t.nextLine();
 
                                  biblioteca.numeroAtualDeLivros(str);
 
-                                 System.out.println("Digite o nome do livro:");
+                                 System.out.println(messages.getString("dtl2"));
                                  str2 = t.nextLine();
 
                                  biblioteca.emprestarLivro(str, str2);
@@ -211,12 +211,12 @@ public class Main
 
                              case 5:
 
-                                 System.out.println("Digite o nome da pessoa:");
+                                 System.out.println(messages.getString("dnp2"));
                                  str = t.nextLine();
 
                                  biblioteca.PegarLivrosDoDono(str);
 
-                                 System.out.println("Digite o titulo do livro:");
+                                 System.out.println(messages.getString("dtl3"));
                                  str2 = t.nextLine();
 
                                  biblioteca.devolverLivro(str, str2);
@@ -225,17 +225,17 @@ public class Main
                                  break;
 
                              case 6:
-                                 System.out.println("Digite o titulo do livro que sera removido:");
+                                 System.out.println(messages.getString("dtlr1"));
                                  str = t.nextLine();
 
                                  correto = biblioteca.removeLivro(str);
                                  if(correto)
                                  {
-                                     System.out.println("O livro foi removido com sucesso");
+                                     System.out.println(messages.getString("lrcs1"));
                                  }
                                  else
                                  {
-                                     System.out.println("ERRO! Titulo inexistente");
+                                     System.out.println(messages.getString("err2"));
                                  }
 
                                  System.out.println();
@@ -245,7 +245,7 @@ public class Main
                                  break;
 
                              default:
-                                 System.out.println("\nO que esta fazendo, parca? Isso foi um comando invalido!\n");
+                                 System.out.println(messages.getString("eegg"));
                                  break;
                         }
                         break;
@@ -261,7 +261,7 @@ public class Main
                         
                     default:
                         
-                        System.out.println("\nO que esta fazendo, parca? Isso foi um comando invalido!\n");
+                        System.out.println(messages.getString("eegg"));
                         
                         break;
                 } 
