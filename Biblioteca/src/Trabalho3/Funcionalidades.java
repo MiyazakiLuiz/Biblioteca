@@ -159,12 +159,12 @@ public class Funcionalidades
         
         if(encontrou)
         {
-            System.out.println("Operacao invalida - Livro ja existe no acervo");
+            System.out.println(messages.getString("a2oplje"));
         }
         else{
             Livro novo = new Livro(nome, empr, diasParaDevolver, text, dono);
             listLivros.add(novo);
-            System.out.println("Livro adicionado com sucesso");    
+            System.out.println(messages.getString("a2las1"));    
         }
     } 
     public void adicionaProfessor(String nome, int livros, boolean sus, int susD)
@@ -180,7 +180,7 @@ public class Funcionalidades
         }
         if(encontrou)
         {
-            System.out.println("Operacao invalida - Pessoa ja esta cadastrada");
+            System.out.println(messages.getString("a2pec"));
         }
         else{
             Professor novo = new Professor(nome, livros, sus, susD);
@@ -201,7 +201,7 @@ public class Funcionalidades
         }
         if(encontrou)
         {
-            System.out.println("Operacao invalida - Pessoa ja esta cadastrada");
+            System.out.println(messages.getString("a2pec"));
         }
         else{
             Aluno novo = new Aluno(nome, livros, sus, susD);
@@ -222,7 +222,7 @@ public class Funcionalidades
         }
         if(encontrou)
         {
-            System.out.println("Operacao invalida - Pessoa ja esta cadastrada");
+            System.out.println(messages.getString("a2pec"));
         }
         else{
             Comunidade novo = new Comunidade(nome, livros, sus, susD);
@@ -244,7 +244,7 @@ public class Funcionalidades
             }
         }
         if(Pessoa == null){
-            System.out.println("Nome da pessoa nao encontrada");
+            System.out.println(messages.getString("a2nne"));
             return false;
         }
         
@@ -260,7 +260,7 @@ public class Funcionalidades
             }
         }
         if(Livro == null){
-            System.out.println("Titulo do livro nao encontrado");
+            System.out.println(messages.getString("a2tne"));
             return false;
         }
         
@@ -269,14 +269,14 @@ public class Funcionalidades
         {
             if(Pessoa.getNumeroDeLivrosMax() == 2 && Livro.getText())
             {
-                System.out.println("Operacao falhou - Comunidade nao pode ter livros texto");
+                System.out.println(messages.getString("a2cnlt"));
                 return false;
             }
             else
             {
                 if(Livro.getEmpr())
                 {
-                    System.out.println("Operacao falhou - Livro ja foi emprestado");
+                    System.out.println(messages.getString("a2lje"));
                     return false;
                 }
                 else
@@ -285,7 +285,7 @@ public class Funcionalidades
                     Livro.setDias(Pessoa.getlimiteDias());
                     Pessoa.setNumeroDeLivros(Pessoa.getNumeroDeLivros() + 1);
                     Livro.setAtualDono(Pessoa.getNome());
-                    System.out.println("Livro emprestado com sucesso");
+                    System.out.println(messages.getString("a2les"));
                     return true;
                 }
 
@@ -295,9 +295,9 @@ public class Funcionalidades
         else
         {
             if(Pessoa.getSuspenso())
-                System.out.println("Operacao falhou - Pessoa suspensa");
+                System.out.println(messages.getString("a2ps"));
             else
-                System.out.println("Operacao falhou - Tentativa de exceder o numero maximo de livros emprestados");
+                System.out.println(messages.getString("a2ten"));
             
             return false;
         }            
@@ -322,8 +322,8 @@ public class Funcionalidades
             return;
         }
         
-        System.out.println("O usuario pode ter no maximo " + pessoa.getNumeroDeLivrosMax() + " livros");
-        System.out.println("Atualmente ele tem " + pessoa.getNumeroDeLivros() + " livros");
+        System.out.println(messages.getString("a2upnm1") + pessoa.getNumeroDeLivrosMax() + messages.getString("a2upnm2"));
+        System.out.println(messages.getString("a2upnm3") + pessoa.getNumeroDeLivros() + messages.getString("a2upnm2"));
     }
     
     
@@ -365,14 +365,14 @@ public class Funcionalidades
             Livro.setAtualDono(nulo);
             Livro.setDias(0);
             Livro.setEmprestado(false);
-            System.out.println("Livro devolvido com sucesso");
+            System.out.println(messages.getString("a2lds"));
             return true;
             
                 
         }
         else
         {
-            System.out.println("Operacao falhou - nome invalido");
+            System.out.println(messages.getString("a2ni"));
             return false;
         }
         
@@ -381,13 +381,13 @@ public class Funcionalidades
     
     public void PegarLivrosDoDono(String Dono)
     {
-        System.out.println("Os possiveis livros a serem retirados sao: ");
+        System.out.println(messages.getString("a2oplsr"));
         
         for(Livro aux : this.listLivros)
         {
             if(aux.getAtualDono() != null && aux.getAtualDono().equals(Dono))
             {
-                System.out.println(aux.getNome() + " - " + aux.getDias() + " dias restantes");
+                System.out.println(aux.getNome() + " - " + aux.getDias() + messages.getString("a2dr"));
             }
         }
     }
@@ -448,10 +448,10 @@ public class Funcionalidades
     
     public void imprimeDatas()
     {
-        System.out.println("Data antiga: ");
+        System.out.println(messages.getString("a2data1"));
         System.out.println(this.diaAntigo + "/" + this.mesAntigo + "/" + this.anoAntigo);
         
-        System.out.println("Data atual: ");
+        System.out.println(messages.getString("a2data2"));
         System.out.println(this.diaAtual + "/" + this.mesAtual + "/" + this.anoAtual);
         System.out.println();
         
@@ -705,11 +705,11 @@ public class Funcionalidades
         for(Livro aux : listLivros)  
         {
             System.out.println("|-----------------------------|");
-            System.out.println("Titulo: " + aux.getNome());
-            System.out.println("Emprestado: " + aux.getEmpr());
-            System.out.println("Dias para o livro chegar: " + aux.getDias()); 
-            System.out.println("Tipo texto: " + aux.getText()); 
-            System.out.println("Livro com: " + aux.getAtualDono());
+            System.out.println(messages.getString("a2l1") + aux.getNome());
+            System.out.println(messages.getString("a2l2") + aux.getEmpr());
+            System.out.println(messages.getString("a2l3") + aux.getDias()); 
+            System.out.println(messages.getString("a2l4") + aux.getText()); 
+            System.out.println(messages.getString("a2l5") + aux.getAtualDono());
             System.out.println("|-----------------------------|");
             System.out.println();
         }
@@ -721,11 +721,11 @@ public class Funcionalidades
         for(Pessoa aux : listNome)  
         {
             System.out.println("|-----------------------------------|");
-            System.out.println("Nome: " + aux.getNome());  
-            System.out.println("Numero maximo de livros: " + aux.getNumeroDeLivrosMax()); 
-            System.out.println("Numero de livros com a pessoa: " + aux.getNumeroDeLivros());
-            System.out.println("Suspenso: " + aux.getSuspenso());
-            System.out.println("Dias de suspenso: " +aux.getDiasDeSuspensao());
+            System.out.println(messages.getString("a2p1") + aux.getNome());  
+            System.out.println(messages.getString("a2p2") + aux.getNumeroDeLivrosMax()); 
+            System.out.println(messages.getString("a2p3") + aux.getNumeroDeLivros());
+            System.out.println(messages.getString("a2p4") + aux.getSuspenso());
+            System.out.println(messages.getString("a2p5") +aux.getDiasDeSuspensao());
             System.out.println("|-----------------------------------|");
             System.out.println();
         }
