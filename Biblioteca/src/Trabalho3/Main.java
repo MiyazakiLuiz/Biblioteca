@@ -1,6 +1,9 @@
 package Trabalho3;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
@@ -8,12 +11,14 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
 public class Main 
 {
-    public static void main(String args[]) throws IOException
+    public static void main(String args[]) throws IOException, URISyntaxException
     {
+        boolean readMode = false;
         ResourceBundle messages;
         int escolha = 1;
         String str, str2;
         boolean correto;
+        String tutturu = "tutturu";
         
         Scanner s = new Scanner(System.in);
         Scanner t = new Scanner(System.in);
@@ -25,6 +30,8 @@ public class Main
         Funcionalidades biblioteca = new Funcionalidades(a, b, c); 
         boolean ciclo = true;
         messages = biblioteca.getMessages();
+        readMode = biblioteca.getReadOnly();
+        System.out.println(readMode);
         //System.out.println(messages.getString("oi"));
         
 
@@ -47,6 +54,13 @@ public class Main
                 {
                     str = s.nextLine();
                     escolha = 10;
+                    if(str.equals(tutturu))
+                    {
+                        if(Desktop.isDesktopSupported())
+                        {
+                             Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=CgouXrkye20"));
+                           }
+                    }
                     
                 }
 
@@ -151,7 +165,8 @@ public class Main
                         System.out.println(messages.getString("24e"));
                         System.out.println(messages.getString("25r"));
                         System.out.println(messages.getString("26r"));
-                        System.out.println(messages.getString("27v"));
+                        System.out.println(messages.getString("27l"));
+                        System.out.println(messages.getString("28v"));
 
                         if(s.hasNextInt())
                         {
@@ -244,8 +259,11 @@ public class Main
 
                                  System.out.println();
                                  break;
-
+                                 
                              case 7:
+                                 biblioteca.verInfoLivrosEmprestados();
+
+                             case 8:
                                  break;
 
                              default:
