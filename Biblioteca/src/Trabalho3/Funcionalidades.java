@@ -253,7 +253,10 @@ public class Funcionalidades
             if(aux.getNome().equals(nomeLivro))
             {
                 Livro = aux;
-                break;
+                if(Livro.getEmpr() != true)
+                {
+                    break;   
+                }
             }
         }
         if(Livro == null){
@@ -343,7 +346,11 @@ public class Funcionalidades
             if(aux.getNome().equals(nomeLivro) && Pessoa.getNome().equals(aux.getAtualDono()))
             {
                 Livro = aux;
-                break;
+                if(Livro.getEmpr() == true)
+                {
+                    break;
+                }
+                
             }
         }
         
