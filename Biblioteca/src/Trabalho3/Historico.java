@@ -6,6 +6,9 @@
 package Trabalho3;
 
 import java.util.Calendar;
+import static java.util.Calendar.DATE;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
 
 /**
  *
@@ -16,6 +19,9 @@ public class Historico
     //private Calendar calendarioN = Calendar.getInstance();
     
     //private Calendar calendarioV = Calendar.getInstance();
+    
+    private Calendar calendarN = Calendar.getInstance();
+    private Calendar calendarA = Calendar.getInstance();
     
     private int diaA;
     private int mesA;
@@ -41,21 +47,38 @@ public class Historico
         
         this.Dono = Dono;
         this.Livro = Livro;
+        
+        this.calendarA.set(DATE, this.diaA);
+        this.calendarA.set(MONTH, this.mesA);
+        this.calendarA.set(YEAR, this.anoA);
+        
+        this.calendarN.set(DATE, this.diaN);
+        this.calendarN.set(MONTH, this.mesN);
+        this.calendarN.set(YEAR, this.anoN);
     }
     
     public void setDia(int a)
     {
         this.diaN = a;
+        this.calendarN.set(DATE, this.diaN);
     }
     
     public void setMes(int a)
     {
         this.mesN = a;
+        this.calendarN.set(MONTH, this.mesN);
     }
     
     public void setAno(int a)
     {
         this.anoN = a;
+        this.calendarN.set(YEAR, this.anoN);
+    }
+    
+    
+    public Calendar getCalendarA()
+    {
+        return this.calendarA;
     }
     
     public int getDiaA()
