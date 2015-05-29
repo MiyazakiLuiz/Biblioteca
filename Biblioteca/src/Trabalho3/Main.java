@@ -16,9 +16,10 @@ public class Main
         boolean readMode = false;
         ResourceBundle messages;
         int escolha = 1;
-        String str, str2;
+        String str, str2, str3, str4;
+        int ano;
         boolean correto;
-        String tutturu = "tutturu";
+        //String tutturu = "tutturu";
         
         Scanner s = new Scanner(System.in);
         Scanner t = new Scanner(System.in);
@@ -69,7 +70,7 @@ public class Main
                 {
                     str = s.nextLine();
                     escolha = 10;
-                    if(str.equals(tutturu))
+                    if(str.equals("tutturu"))
                     {
                         System.out.println("tutturu!");
                         if(Desktop.isDesktopSupported())
@@ -199,18 +200,30 @@ public class Main
                                  System.out.println(messages.getString("dtl1"));
 
                                  str = t.nextLine();
+                                 
+                                 System.out.println(messages.getString("autor"));
+                                 str2 = t.nextLine();
+                                 
+                                 System.out.println(messages.getString("editora"));
+                                 str3 = t.nextLine();
+                                 
+                                 System.out.println(messages.getString("ano"));
+                                 ano = t.nextInt();
 
                                  System.out.println(messages.getString("tl"));
                                  System.out.println(messages.getString("tl1"));
                                  System.out.println(messages.getString("tl2"));
 
-
                                  escolha = s.nextInt();
-                                 str2 = null;
+                                 
+                                 
+                                 
+                                 str4 = null;
+                                 
                                  if(escolha == 1)
-                                    biblioteca.adicionaLivro(str, false, 0, true, str2);
+                                    biblioteca.adicionaLivro(str, false, 0, true, str4, str2, str3, ano);
                                  else
-                                    biblioteca.adicionaLivro(str, false, 0, false, str2);
+                                    biblioteca.adicionaLivro(str, false, 0, false, str4, str2, str3, ano);
 
                                  System.out.println();
                                  break;
