@@ -13,13 +13,16 @@ public class Livro
     private boolean text;
     private String atualDono;
 
-    Livro(String a, boolean b, int c, boolean d, String e) 
+    Livro(String a, boolean b, int c, boolean d, String e, String f, String g, int h) 
     {
         this.titulo = a;
         this.emprestado = b;
         this.diasRestantes = c;  
         this.text = d;
         this.atualDono = e;
+        this.autor = f;
+        this.editora = g;
+        this.ano = h;
     }
     
     public void setAtualDono(String a)
