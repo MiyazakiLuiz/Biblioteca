@@ -26,8 +26,9 @@ public class Main
         String a = "listaPessoa.csv";
         String b = "listaLivro.csv";
         String c = "data.csv";
+        String d = "historico.csv";
         
-        Funcionalidades biblioteca = new Funcionalidades(a, b, c); 
+        Funcionalidades biblioteca = new Funcionalidades(a, b, c, d); 
         boolean ciclo = true;
         messages = biblioteca.getMessages();
         readMode = biblioteca.getReadOnly();
@@ -56,10 +57,11 @@ public class Main
                     escolha = 10;
                     if(str.equals(tutturu))
                     {
+                        System.out.println("tutturu!");
                         if(Desktop.isDesktopSupported())
                         {
                              Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=CgouXrkye20"));
-                           }
+                        }
                     }
                     
                 }
@@ -281,6 +283,10 @@ public class Main
                         ciclo = false;
                         break;
                         
+                    case 5:
+                         biblioteca.imprimeHistorico();
+                        break;
+                        
                     default:
                         
                         System.out.println(messages.getString("eegg"));
@@ -291,7 +297,7 @@ public class Main
             }
     
         
-        biblioteca.fechaArquivo(a, b, c);
+        biblioteca.fechaArquivo(a, b, c, d);
     
     }
 }
