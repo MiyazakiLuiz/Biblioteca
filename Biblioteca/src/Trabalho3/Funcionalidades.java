@@ -35,6 +35,7 @@ public class Funcionalidades
         
     private static ArrayList<Pessoa> listNome = new ArrayList<Pessoa>();
     private static ArrayList<Livro> listLivros = new ArrayList<Livro>();
+    private static ArrayList<Historico> listHistorico = new ArrayList<Historico>();
     
     private boolean readOnly = false;
     private String lang;
@@ -322,6 +323,7 @@ public class Funcionalidades
                     Pessoa.setNumeroDeLivros(Pessoa.getNumeroDeLivros() + 1);
                     Livro.setAtualDono(Pessoa.getNome());
                     System.out.println(messages.getString("a2les"));
+                    this.listHistorico.add(new Historico(this.diaAtual, this.mesAtual, this.anoAtual, 0, 0, 0, Pessoa.getNome(), Livro.getNome()));
                     return true;
                 }
 
@@ -406,7 +408,21 @@ public class Funcionalidades
             Livro.setAtualDono(nulo);
             Livro.setDias(0);
             Livro.setEmprestado(false);
+            
+            for(Historico aux : listHistorico)
+            {
+                if(aux.getDono().equals(Pessoa.getNome()) && aux.getLivro().equals(Livro.getNome()))
+                {
+                    aux.setDia(this.diaAtual);
+                    aux.setMes(this.mesAtual);
+                    aux.setAno(this.anoAtual);
+                }
+            }
+            
             System.out.println(messages.getString("a2lds"));
+            
+            
+            
             return true;
             
                 
@@ -500,6 +516,18 @@ public class Funcionalidades
 
     }
     
+    public void imprimeHistorico()
+    {
+        
+        
+        for(Historico aux : listHistorico)
+        {
+           System.out.println(aux.getDiaA() + "/" + aux.getMesA() + "/" + aux.getAnoA());
+           System.out.println(aux.getDiaN() + "/" + aux.getMesN() + "/" + aux.getAnoN());
+           System.out.println(aux.getDono());
+           System.out.println(aux.getLivro());
+        }
+    }
     
     
     public void preparaListaNome(String listaPessoa)
@@ -595,6 +623,39 @@ public class Funcionalidades
 	}
     }
     
+    public void preparaHistorico(String entregas_retornos)
+    {
+        Calendar calv = Calendar.getInstance();
+        Calendar caln = Calendar.getInstance();
+        try 
+        {
+		BufferedReader in = new BufferedReader(new FileReader(entregas_retornos));
+		String historico;
+                
+		while((historico = in.readLine()) != null)   
+                {
+                    String[] values = historico.split(",");
+                    /*calv.set(DATE, Integer.parseInt(values[0]));
+                    calv.set(MONTH, Integer.parseInt(values[1]));
+                    calv.set(YEAR, Integer.parseInt(values[2]));
+                    caln.set(DATE, Integer.parseInt(values[3]));
+                    caln.set(MONTH, Integer.parseInt(values[4]));
+                    caln.set(YEAR, Integer.parseInt(values[5]));*/
+                    listHistorico.add(new Historico(Integer.parseInt(values[0]), Integer.parseInt(values[1]),Integer.parseInt(values[2]), Integer.parseInt(values[3]),Integer.parseInt(values[4]), Integer.parseInt(values[5]),values[6], values[7]));
+		}
+	}
+        
+	catch(FileNotFoundException e) 
+        {
+		System.out.println("File " + entregas_retornos + " was not found!");
+	}
+        
+	catch(IOException e) 
+        {
+		System.out.println("Error reading the file!");
+	}
+    }
+    
     public void preparaDataAtual()
     {
         //calendarioN.set(MONTH, MONTH+1);
@@ -623,54 +684,6 @@ public class Funcionalidades
         }
     }
    
-    
-    /*public int calculaDiferenca()
-    {
-        if(this.calendarioN.compareTo(this.calendarioV) == 0)
-        {
-            return 0;
-        }
-        else
-        {
-            this.diferencaDias = ((this.anoAtual - this.anoAntigo) * 365);
-            if(this.mesAtual < this.mesAntigo)
-            {
-                this.diferencaDias -= (this.mesAntigo - this.mesAtual) * 30;
-            }
-            else
-            {
-                if(this.diferencaDias == 0)
-                {
-                    this.diferencaDias += (this.mesAtual - this.mesAntigo) * 30;
-                }
-                else
-                {
-                    this.diferencaDias -= (this.mesAtual - this.mesAntigo) * 30;
-                }
-                
-            }
-            
-            if(this.diaAtual < this.diaAntigo)
-            {
-                this.diferencaDias += (this.diaAntigo - this.diaAtual);
-            }
-            else
-            {
-                if((this.mesAtual - this.mesAntigo) == 0)
-                {
-                    this.diferencaDias += (this.diaAtual - this.diaAntigo);
-                }
-                else
-                {
-                    this.diferencaDias -= (this.diaAtual - this.diaAntigo);
-                }
-                
-            }
-            
-            System.out.println(this.diferencaDias);
-            return this.diferencaDias;
-        }
-    }*/
     
     public int calculaDiferenca()
     {
@@ -702,12 +715,6 @@ public class Funcionalidades
                 }
             }
         }
-        
-        
-        
-        
-        
-        
         
         for(Livro aux : listLivros)
         {
@@ -764,7 +771,7 @@ public class Funcionalidades
         
     
     
-    public Funcionalidades (String listaPessoa, String listaLivro, String data) 
+    public Funcionalidades (String listaPessoa, String listaLivro, String data, String entregas_retornos) 
     {
         int dif;
         boolean teste;
@@ -786,6 +793,7 @@ public class Funcionalidades
         this.preparaListaNome(listaPessoa);
         this.preparaListaLivro(listaLivro);
         this.preparaDataAntiga(data);
+        this.preparaHistorico(entregas_retornos);
         teste = this.digitaDias();
         if(teste == false)
         {
@@ -842,7 +850,7 @@ public class Funcionalidades
         
     }
     
-    public void fechaArquivo(String a, String b, String c) throws IOException
+    public void fechaArquivo(String a, String b, String c, String d) throws IOException
     {
         
         FileWriter arq = new FileWriter(a);
@@ -880,12 +888,21 @@ public class Funcionalidades
        PrintWriter pw3 = new PrintWriter(arq3);
        
        
-           pw3.print(this.diaAtual + "," + this.mesAtual + "," + this.anoAtual + "\n");
-           
-       
-       
+        pw3.print(this.diaAtual + "," + this.mesAtual + "," + this.anoAtual + "\n");
+
        
        arq3.close();
+       
+       
+       FileWriter arq4 = new FileWriter(d);
+       PrintWriter pw4 = new PrintWriter(arq4);
+       
+       for(Historico aux : this.listHistorico)
+       {
+           pw4.print(aux.getDiaA()+ "," + aux.getMesA() + "," + aux.getAnoA() + "," + aux.getDiaN() + "," + aux.getMesN() + "," + aux.getAnoN() + "," + aux.getDono() + "," + aux.getLivro()+ "\n");
+       }
+       
+       arq4.close();
        
     }
     
