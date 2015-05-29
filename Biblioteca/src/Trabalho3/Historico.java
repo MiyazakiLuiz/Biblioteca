@@ -76,9 +76,15 @@ public class Historico
     }
     
     
+    
     public Calendar getCalendarA()
     {
         return this.calendarA;
+    }
+    
+    public Calendar getCalendarN()
+    {
+        return this.calendarN;
     }
     
     public int getDiaA()
