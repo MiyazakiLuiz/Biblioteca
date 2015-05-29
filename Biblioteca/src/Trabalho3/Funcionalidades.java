@@ -501,8 +501,6 @@ public class Funcionalidades
         });
     }
     
-    
-    
     public void imprimeDatas()
     {
         System.out.println(messages.getString("a2data1"));
@@ -518,14 +516,16 @@ public class Funcionalidades
     
     public void imprimeHistorico()
     {
-        
-        
+
         for(Historico aux : listHistorico)
         {
-           System.out.println(aux.getDiaA() + "/" + aux.getMesA() + "/" + aux.getAnoA());
-           System.out.println(aux.getDiaN() + "/" + aux.getMesN() + "/" + aux.getAnoN());
-           System.out.println(aux.getDono());
-           System.out.println(aux.getLivro());
+           if(this.calendarioN.compareTo(aux.getCalendarA()) > 0)
+           {
+                System.out.println(aux.getDiaA() + "/" + aux.getMesA() + "/" + aux.getAnoA());
+                System.out.println(aux.getDiaN() + "/" + aux.getMesN() + "/" + aux.getAnoN());
+                System.out.println(aux.getDono());
+                System.out.println(aux.getLivro());
+           }
         }
     }
     
@@ -666,10 +666,10 @@ public class Funcionalidades
         
     }
     
-    public void calcDifLivros(int a)
+    /*public void calcDifLivros(int a)
     {
         
-    }
+    }*/
    
     public void verInfoLivrosEmprestados()
     {
@@ -679,7 +679,7 @@ public class Funcionalidades
             {
                 System.out.println(aux.getNome());
                 System.out.println(aux.getAtualDono());
-                this.calcDifLivros(aux.getDias());
+                //this.calcDifLivros(aux.getDias());
             }
         }
     }
@@ -751,14 +751,17 @@ public class Funcionalidades
         if(valor != 0 && valor > 0 && valor < 31)
         {
             this.diaAtual = valor;
+            this.calendarioN.set(DATE, valor);
             valor = s.nextInt();
             if(valor != 0 && valor > 0 && valor < 13)
             {
                 this.mesAtual = valor;
+                this.calendarioN.set(MONTH, valor);
                 valor = s.nextInt();
                 if(valor != 0 && valor > 0)
                 {
                     this.anoAtual = valor;
+                    this.calendarioN.set(YEAR, valor);
                     return true;
                 }
                 
