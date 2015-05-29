@@ -162,7 +162,7 @@ public class Funcionalidades
         return (this.listLivros.remove(rem));
     }
     
-    public void adicionaLivro(String nome, boolean empr, int diasParaDevolver, boolean text, String dono)
+    public void adicionaLivro(String nome, boolean empr, int diasParaDevolver, boolean text, String dono, String autor, String editora, int ano)
     {
         if(this.readOnly == true)
         {
@@ -184,11 +184,12 @@ public class Funcionalidades
             System.out.println(messages.getString("a2oplje"));
         }
         else{
-            Livro novo = new Livro(nome, empr, diasParaDevolver, text, dono);
+            Livro novo = new Livro(nome, empr, diasParaDevolver, text, dono, autor, editora, ano);
             listLivros.add(novo);
             System.out.println(messages.getString("a2las1"));    
         }
     } 
+    
     public void adicionaProfessor(String nome, int livros, boolean sus, int susD)
     {
         if(this.readOnly == true)
@@ -623,7 +624,7 @@ public class Funcionalidades
                     
                 {
                     String[] values = livro.split(",");
-                    listLivros.add(new Livro(values[0], Boolean.parseBoolean(values[1]), Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), values[4]));
+                    listLivros.add(new Livro(values[0], Boolean.parseBoolean(values[1]), Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), values[4], values[5], values[6], Integer.parseInt(values[7])));
 		}
 	}
         
@@ -875,10 +876,13 @@ public class Funcionalidades
         {
             System.out.println("|-----------------------------|");
             System.out.println(messages.getString("a2l1") + aux.getNome());
-            System.out.println(messages.getString("a2l2") + aux.getEmpr());
-            System.out.println(messages.getString("a2l3") + aux.getDias()); 
-            System.out.println(messages.getString("a2l4") + aux.getText()); 
-            System.out.println(messages.getString("a2l5") + aux.getAtualDono());
+            System.out.println(messages.getString("a2l2") + aux.getAutor());
+            System.out.println(messages.getString("a2l3") + aux.getEdtora());
+            System.out.println(messages.getString("a2l4") + aux.getAno());
+            System.out.println(messages.getString("a2l5") + aux.getEmpr());
+            System.out.println(messages.getString("a2l6") + aux.getDias()); 
+            System.out.println(messages.getString("a2l7") + aux.getText()); 
+            System.out.println(messages.getString("a2l8") + aux.getAtualDono());
             System.out.println("|-----------------------------|");
             System.out.println();
         }
@@ -927,7 +931,7 @@ public class Funcionalidades
        
        for(Livro aux : this.listLivros)
        {
-           pw2.print(aux.getNome() + "," + aux.getEmpr() + "," + aux.getDias() + "," + aux.getText() + "," + aux.getAtualDono() + "\n");
+           pw2.print(aux.getNome() + "," + aux.getEmpr() + "," + aux.getDias() + "," + aux.getText() + "," + aux.getAtualDono() + "," + aux.getAutor() + "," + aux.getEdtora() + "," + aux.getAno() + "\n");
            
        
        }
