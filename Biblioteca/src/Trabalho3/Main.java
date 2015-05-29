@@ -32,7 +32,12 @@ public class Main
         boolean ciclo = true;
         messages = biblioteca.getMessages();
         readMode = biblioteca.getReadOnly();
-        System.out.println(readMode);
+        if(readMode == true)
+        {
+            System.out.println(messages.getString("readonly1"));
+            System.out.println(messages.getString("readonly2"));
+        }
+       // System.out.println(readMode);
         //System.out.println(messages.getString("oi"));
         
 
@@ -44,12 +49,21 @@ public class Main
                 System.out.println(messages.getString("1pessoa"));
                 System.out.println(messages.getString("2livro"));
                 System.out.println(messages.getString("3data"));
-                System.out.println(messages.getString("4fechar"));
+                System.out.println(messages.getString("4historico"));
+                System.out.println(messages.getString("5fechar"));
 
                 if(s.hasNextInt())
                 {
                     
                     escolha = s.nextInt();
+                    if(escolha == 42)
+                    {
+                        System.out.println("The Answer to the Ultimate Question of Life, The Universe, and Everything.");
+                        if(Desktop.isDesktopSupported())
+                        {
+                             Desktop.getDesktop().browse(new URI("http://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29"));
+                        }
+                    }
                 }
                 else
                 {
@@ -148,7 +162,7 @@ public class Main
                              case 5:
                                  System.out.println(messages.getString("dnp1"));
                                  str = t.nextLine();
-                                 biblioteca.numeroAtualDeLivros(str);
+                                 biblioteca.consultaLivros(str);
                                  
                                  break;
 
@@ -279,12 +293,13 @@ public class Main
                         System.out.println();
                         break; 
 
-                    case 4:
+                    case 5:
                         ciclo = false;
                         break;
                         
-                    case 5:
-                         biblioteca.imprimeHistorico();
+                    case 4:
+                        System.out.println(messages.getString("ih1"));
+                        biblioteca.imprimeHistorico();
                         break;
                         
                     default:
