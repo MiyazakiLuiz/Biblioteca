@@ -737,6 +737,9 @@ public class Funcionalidades
     public void atualizaDias(int a)
     {
         int teste;
+        boolean c = false;
+        
+        System.out.println(messages.getString("livrosematraso"));
         
         for(Pessoa aux : listNome)
         {
@@ -762,6 +765,7 @@ public class Funcionalidades
                 teste = aux.getDias() - a;
                 if(teste < 0)
                 {
+                    c = true;
                     for(Pessoa aux2 : listNome)
                     {
                         if(aux.getAtualDono() != null && aux.getAtualDono().equals(aux2.getNome()))
@@ -770,12 +774,17 @@ public class Funcionalidades
                         }
                     }
                     aux.setDias(teste);
+                   // System.out.println(messages.getString());
                 }
                 else
                 {
                     aux.setDias(teste);
                 }
             }
+        }
+        if(!c)
+        {
+            System.out.println(" - ");
         }
         
     }
