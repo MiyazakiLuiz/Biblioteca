@@ -123,6 +123,11 @@ public class Funcionalidades
     
     public boolean removeLivro(String a)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return false;
+        }
         String str;
         Livro rem = null;
         Pessoa rem2 = null;
@@ -194,7 +199,7 @@ public class Funcionalidades
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
-            if(aux.getNome() == nome)
+            if(aux.getNome().equals(nome))
             {
                 encontrou = true;
                 break;
@@ -220,7 +225,7 @@ public class Funcionalidades
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
-            if(aux.getNome() == nome)
+            if(aux.getNome().equals(nome))
             {
                 encontrou = true;
                 break;
@@ -246,7 +251,7 @@ public class Funcionalidades
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
-            if(aux.getNome() == nome)
+            if(aux.getNome().equals(nome))
             {
                 encontrou = true;
                 break;
@@ -360,10 +365,31 @@ public class Funcionalidades
             return;
         }
         
-        System.out.println(messages.getString("a2upnm1") + pessoa.getNumeroDeLivrosMax() + messages.getString("a2upnm2"));
-        System.out.println(messages.getString("a2upnm3") + pessoa.getNumeroDeLivros() + messages.getString("a2upnm2"));
+        System.out.println(messages.getString("a2upnm1") + pessoa.getNumeroDeLivrosMax() + " " + messages.getString("a2upnm2"));
+        System.out.println(messages.getString("a2upnm3") + pessoa.getNumeroDeLivros() + " " + messages.getString("a2upnm2") + "\n");
     }
     
+    
+    public void consultaLivros(String nomePessoa)
+    {
+        boolean c = false;
+       
+        System.out.println(messages.getString("livrosqueapessoatem"));
+       
+        for(Livro aux: this.listLivros)
+        {
+            if(aux.getAtualDono().equals(nomePessoa))
+            {
+                System.out.println("> " + aux.getNome() + messages.getString("diasrestantes") + aux.getDias());
+                c = true;
+            }
+        }
+       
+        if(!c)
+            System.out.println("-");
+       
+        System.out.println();
+    }
     
     public boolean devolverLivro(String nomePessoa, String nomeLivro)
     {
@@ -419,7 +445,8 @@ public class Funcionalidades
                 }
             }
             
-            System.out.println(messages.getString("a2lds"));
+            
+            System.out.println("\n" + messages.getString("a2lds"));
             
             
             
@@ -444,7 +471,7 @@ public class Funcionalidades
         {
             if(aux.getAtualDono() != null && aux.getAtualDono().equals(Dono))
             {
-                System.out.println(aux.getNome() + " - " + aux.getDias() + messages.getString("a2dr"));
+                System.out.println(aux.getNome() + " - " + aux.getDias() + " " + messages.getString("a2dr"));
             }
         }
     }
@@ -519,12 +546,28 @@ public class Funcionalidades
 
         for(Historico aux : listHistorico)
         {
-           if(this.calendarioN.compareTo(aux.getCalendarA()) > 0)
+           if(this.calendarioN.compareTo(aux.getCalendarA()) > 0 || (this.diaAtual == aux.getDiaA() && this.mesAtual == aux.getMesA() && this.anoAtual == aux.getAnoA()))
            {
-                System.out.println(aux.getDiaA() + "/" + aux.getMesA() + "/" + aux.getAnoA());
-                System.out.println(aux.getDiaN() + "/" + aux.getMesN() + "/" + aux.getAnoN());
-                System.out.println(aux.getDono());
-                System.out.println(aux.getLivro());
+                System.out.println(messages.getString("ih2") + aux.getDiaA() + "/" + aux.getMesA() + "/" + aux.getAnoA());
+                if(aux.getDiaN() == 0 && aux.getMesN() == 0 && aux.getAnoN() == 0)
+                {
+                    System.out.println(messages.getString("ih3") + " - ");
+                }
+                else
+                {
+                    if(this.calendarioN.compareTo(aux.getCalendarN()) < 0 && (this.diaAtual != aux.getDiaN() || this.mesAtual != aux.getMesN() || this.anoAtual != aux.getAnoN()))
+                    {
+                        System.out.println(messages.getString("ih3") + " - ");
+                    }
+                    else
+                    {
+                        System.out.println(messages.getString("ih3") + aux.getDiaN() + "/" + aux.getMesN() + "/" + aux.getAnoN());
+                    }
+                    
+                }
+                System.out.println(messages.getString("ih4") + aux.getDono());
+                System.out.println(messages.getString("ih5") + aux.getLivro());
+                System.out.println();
            }
         }
     }
@@ -666,10 +709,6 @@ public class Funcionalidades
         
     }
     
-    /*public void calcDifLivros(int a)
-    {
-        
-    }*/
    
     public void verInfoLivrosEmprestados()
     {
@@ -690,7 +729,7 @@ public class Funcionalidades
         this.diferencaDias += (this.anoAtual - this.anoAntigo) * 365;
         this.diferencaDias += (this.mesAtual - this.mesAntigo) * 30;
         this.diferencaDias += this.diaAtual - this.diaAntigo;
-        System.out.println(this.diferencaDias);
+        //System.out.println(this.diferencaDias);
         return this.diferencaDias;
     }
     
@@ -808,10 +847,10 @@ public class Funcionalidades
         {
             this.readOnly = true;
         }
-        //else
-        //{
+        else
+        {
             this.atualizaDias(dif);
-        //}
+        }
         
         
         
@@ -890,8 +929,15 @@ public class Funcionalidades
        FileWriter arq3 = new FileWriter(c);
        PrintWriter pw3 = new PrintWriter(arq3);
        
+       if(this.readOnly == false)
+       {
+           pw3.print(this.diaAtual + "," + this.mesAtual + "," + this.anoAtual + "\n");
+       }
+       else
+       {
+           pw3.print(this.diaAntigo + "," + this.mesAntigo + "," + this.anoAntigo + "\n");
+       }
        
-        pw3.print(this.diaAtual + "," + this.mesAtual + "," + this.anoAtual + "\n");
 
        
        arq3.close();
