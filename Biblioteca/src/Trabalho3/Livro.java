@@ -4,6 +4,10 @@ package Trabalho3;
 public class Livro 
 {
     private String titulo;
+    private String editora;
+    private String autor;
+    private int ano;
+    
     private boolean emprestado;
     private int diasRestantes;
     private boolean text;
@@ -36,6 +40,21 @@ public class Livro
     public String getNome()
     {
         return this.titulo;
+    }
+    
+    public String getAutor()
+    {
+        return this.autor;
+    }
+    
+    public String getEdtora()
+    {
+        return this.editora;
+    }
+    
+    public int getAno()
+    {
+        return this.ano;
     }
     
     public boolean getText()
