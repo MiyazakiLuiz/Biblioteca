@@ -18,6 +18,7 @@ public class Main
         int escolha = 1;
         String str, str2, str3, str4;
         int ano;
+        int id;
         boolean correto;
         //String tutturu = "tutturu";
         
@@ -110,6 +111,8 @@ public class Main
                                 escolha = s.nextInt();
                                 System.out.println(messages.getString("1111d"));
                                 str = t.nextLine();
+                                System.out.println(messages.getString("1111id"));
+                                id = t.nextInt();
                                 System.out.println(messages.getString("1111i"));
                                 ano = t.nextInt();
                                 System.out.println(messages.getString("1111s"));
@@ -119,15 +122,15 @@ public class Main
                                 if(escolha == 1)
                                 {
 
-                                    biblioteca.adicionaProfessor(str, 0, false, 0, ano, str2);
+                                    biblioteca.adicionaProfessor(str, 0, false, 0, ano, str2, id);
                                 }
                                 else if (escolha == 2)
                                 {
-                                    biblioteca.adicionaAluno(str, 0, false, 0, ano, str2);
+                                    biblioteca.adicionaAluno(str, 0, false, 0, ano, str2, id);
                                 }
                                 else if (escolha == 3)
                                 {
-                                    biblioteca.adicionaComunidade(str, 0, false, 0, ano, str2);
+                                    biblioteca.adicionaComunidade(str, 0, false, 0, ano, str2, id);
                                 }
 
                                 System.out.println(messages.getString("pics1"));

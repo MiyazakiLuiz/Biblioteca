@@ -3,7 +3,7 @@ package Trabalho3;
 
 public class Professor extends Pessoa
 {
-    Professor(String a, int b, boolean c, int d, int e, String f)
+    Professor(String a, int b, boolean c, int d, int e, String f, int g)
     {
         this.setNome(a);
         this.setNumeroDeLivros(b);
@@ -13,5 +13,6 @@ public class Professor extends Pessoa
         this.setDiasDeSuspensao(d);
         this.setIdade(e);
         this.setSonho(f);
+        this.setId(g);
     }
 }

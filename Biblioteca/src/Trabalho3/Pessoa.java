@@ -6,6 +6,7 @@ public abstract class Pessoa
     private String nome;
     private int idade;
     private String sonhos_e_esperancas;
+    private int id;
     
     
     
@@ -41,6 +42,11 @@ public abstract class Pessoa
         this.idade = a;
     }
     
+    public void setId(int a)
+    {
+        this.id = a;
+    }
+    
     public String getNome()
     {
         return this.nome;
@@ -54,6 +60,11 @@ public abstract class Pessoa
     public int getIdade()
     {
         return this.idade;
+    }
+    
+    public int getId()
+    {
+        return this.id;
     }
     
     /*void Pessoa(String a)
