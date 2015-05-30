@@ -170,8 +170,8 @@ public class Main
 
                              case 5:
                                  System.out.println(messages.getString("dnp1"));
-                                 str = t.nextLine();
-                                 biblioteca.consultaLivros(str);
+                                 id = t.nextInt();
+                                 biblioteca.consultaLivros(id);
                                  
                                  break;
 
@@ -253,14 +253,14 @@ public class Main
                              case 4:
 
                                  System.out.println(messages.getString("dnp1"));
-                                 str = t.nextLine();
+                                 id = t.nextInt();
 
-                                 biblioteca.numeroAtualDeLivros(str);
+                                 biblioteca.numeroAtualDeLivros(id);
 
                                  System.out.println(messages.getString("dtl2"));
                                  str2 = t.nextLine();
 
-                                 biblioteca.emprestarLivro(str, str2);
+                                 biblioteca.emprestarLivro(id, str2);
                                  System.out.println();
                                  break;
 

@@ -268,7 +268,7 @@ public class Funcionalidades
         }
     }
     
-    public boolean emprestarLivro(String nomePessoa, String nomeLivro)
+    public boolean emprestarLivro(int id, String nomeLivro)
     {
         if(this.readOnly == true)
         {
@@ -280,7 +280,7 @@ public class Funcionalidades
         
         for (Pessoa aux : listNome)
         {
-            if(aux.getNome().equals(nomePessoa))
+            if(aux.getId() == id)
             {
                 Pessoa = aux;
                 break;
@@ -348,13 +348,13 @@ public class Funcionalidades
         
     }
     
-    public void numeroAtualDeLivros(String Nome)
+    public void numeroAtualDeLivros(int id)
     {
         Pessoa pessoa = null;
         
         for(Pessoa aux : this.listNome)
         {
-            if(aux.getNome().equals(Nome))
+            if(aux.getId() == id)
             {
                 pessoa = aux;
                 break;
@@ -371,11 +371,27 @@ public class Funcionalidades
     }
     
     
-    public void consultaLivros(String nomePessoa)
+    public void consultaLivros(int id)
     {
         boolean c = false;
-       
+        String nomePessoa = null;
         System.out.println(messages.getString("livrosqueapessoatem"));
+        
+        for(Pessoa aux : listNome)
+        {
+            if(aux.getId() == id)
+            {
+                nomePessoa = aux.getNome();
+            }
+        }
+        
+        if(nomePessoa == null)
+        {
+            return;
+        }
+        
+        //System.out.println(nomePessoa);
+        
        
         for(Livro aux: this.listLivros)
         {
