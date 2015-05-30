@@ -15,7 +15,8 @@ public class Main
     {
         boolean readMode = false;
         ResourceBundle messages;
-        int escolha = 1;
+        int escolha = 0;
+        int escolha2 = 0;
         String str, str2, str3, str4;
         int ano;
         int id;
@@ -108,8 +109,9 @@ public class Main
                                 System.out.println(messages.getString("111p"));
                                 System.out.println(messages.getString("112a"));
                                 System.out.println(messages.getString("113c"));
-                                escolha = s.nextInt();
+                                escolha2 = s.nextInt();
                                 System.out.println(messages.getString("1111d"));
+                                t.next();
                                 str = t.nextLine();
                                 System.out.println(messages.getString("1111id"));
                                 id = t.nextInt();
@@ -119,16 +121,16 @@ public class Main
                                 str2 = s.nextLine();
                                 str2 = s.nextLine();
                                 
-                                if(escolha == 1)
+                                if(escolha2 == 1)
                                 {
 
                                     biblioteca.adicionaProfessor(str, 0, false, 0, ano, str2, id);
                                 }
-                                else if (escolha == 2)
+                                else if (escolha2 == 2)
                                 {
                                     biblioteca.adicionaAluno(str, 0, false, 0, ano, str2, id);
                                 }
-                                else if (escolha == 3)
+                                else if (escolha2 == 3)
                                 {
                                     biblioteca.adicionaComunidade(str, 0, false, 0, ano, str2, id);
                                 }
@@ -258,6 +260,7 @@ public class Main
                                  biblioteca.numeroAtualDeLivros(id);
 
                                  System.out.println(messages.getString("dtl2"));
+                                 str2 = t.nextLine();
                                  str2 = t.nextLine();
 
                                  biblioteca.emprestarLivro(id, str2);

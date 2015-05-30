@@ -1,3 +1,4 @@
 Goulash,false,0,false,null,Bandejao,USP,2015
 Fundamentos basicos de como nao tomar um nabo,false,0,true,null,Joao,USP,2015
-Spell book,false,0,false,null,Marisa,?,2000
+Spell book,true,15,false,Zanardo,Marisa,?,2000
+Sono,true,15,true,Zanardo,Snake,zzz,2015
