@@ -110,19 +110,24 @@ public class Main
                                 escolha = s.nextInt();
                                 System.out.println(messages.getString("1111d"));
                                 str = t.nextLine();
-
+                                System.out.println(messages.getString("1111i"));
+                                ano = t.nextInt();
+                                System.out.println(messages.getString("1111s"));
+                                str2 = s.nextLine();
+                                str2 = s.nextLine();
+                                
                                 if(escolha == 1)
                                 {
 
-                                    biblioteca.adicionaProfessor(str, 0, false, 0);
+                                    biblioteca.adicionaProfessor(str, 0, false, 0, ano, str2);
                                 }
                                 else if (escolha == 2)
                                 {
-                                    biblioteca.adicionaAluno(str, 0, false, 0);
+                                    biblioteca.adicionaAluno(str, 0, false, 0, ano, str2);
                                 }
                                 else if (escolha == 3)
                                 {
-                                    biblioteca.adicionaComunidade(str, 0, false, 0);
+                                    biblioteca.adicionaComunidade(str, 0, false, 0, ano, str2);
                                 }
 
                                 System.out.println(messages.getString("pics1"));
@@ -201,13 +206,13 @@ public class Main
 
                                  str = t.nextLine();
                                  
-                                 System.out.println(messages.getString("autor"));
+                                 System.out.println(messages.getString("autorP"));
                                  str2 = t.nextLine();
                                  
-                                 System.out.println(messages.getString("editora"));
+                                 System.out.println(messages.getString("editoraP"));
                                  str3 = t.nextLine();
                                  
-                                 System.out.println(messages.getString("ano"));
+                                 System.out.println(messages.getString("anoP"));
                                  ano = t.nextInt();
 
                                  System.out.println(messages.getString("tl"));

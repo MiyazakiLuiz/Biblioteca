@@ -31,7 +31,7 @@ public abstract class Pessoa
         this.nome = a;
     }
     
-    /*public void setSonho(String a)
+    public void setSonho(String a)
     {
         this.sonhos_e_esperancas = a;
     }
@@ -39,7 +39,7 @@ public abstract class Pessoa
     public void setIdade(int a)
     {
         this.idade = a;
-    }*/
+    }
     
     public String getNome()
     {

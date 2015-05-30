@@ -5,7 +5,7 @@ public class Aluno extends Pessoa
 {
 
 
-    Aluno(String a, int b, boolean c, int d)
+    Aluno(String a, int b, boolean c, int d, int e, String f)
     {
         this.setNome(a);
         this.setNumeroDeLivros(b);
@@ -13,5 +13,7 @@ public class Aluno extends Pessoa
         this.setNumeroDeLivrosMax(4);
         this.setlimiteDias(15);
         this.setDiasDeSuspensao(d);
+        this.setIdade(e);
+        this.setSonho(f);
     }
 }
