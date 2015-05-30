@@ -71,7 +71,7 @@ public class Funcionalidades
     }
     
     
-    public boolean removePessoa(String a)
+    public boolean removePessoa(int a)
     {
         if(this.readOnly == true)
         {
@@ -84,7 +84,7 @@ public class Funcionalidades
         
         for(Pessoa aux : listNome)
         {
-            if (a.equals(aux.getNome()))
+            if (a == aux.getId())
             {
                 rem = aux;
             }
@@ -200,7 +200,7 @@ public class Funcionalidades
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
-            if(aux.getNome().equals(nome))
+            if(aux.getId() == id)
             {
                 encontrou = true;
                 break;
@@ -226,7 +226,7 @@ public class Funcionalidades
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
-            if(aux.getNome().equals(nome))
+            if(aux.getId() == id)
             {
                 encontrou = true;
                 break;
@@ -252,7 +252,7 @@ public class Funcionalidades
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
-            if(aux.getNome().equals(nome))
+            if(aux.getId() == id)
             {
                 encontrou = true;
                 break;
@@ -895,12 +895,13 @@ public class Funcionalidades
         {
             System.out.println("|-----------------------------------|");
             System.out.println(messages.getString("a2p1") + aux.getNome());  
-            System.out.println(messages.getString("a2p2") + aux.getIdade());
-            System.out.println(messages.getString("a2p3") + aux.getSonho());
-            System.out.println(messages.getString("a2p4") + aux.getNumeroDeLivrosMax()); 
-            System.out.println(messages.getString("a2p5") + aux.getNumeroDeLivros());
-            System.out.println(messages.getString("a2p6") + aux.getSuspenso());
-            System.out.println(messages.getString("a2p7") +aux.getDiasDeSuspensao());
+            System.out.println(messages.getString("a2p2") + aux.getId());
+            System.out.println(messages.getString("a2p3") + aux.getIdade());
+            System.out.println(messages.getString("a2p4") + aux.getSonho());
+            System.out.println(messages.getString("a2p5") + aux.getNumeroDeLivrosMax()); 
+            System.out.println(messages.getString("a2p6") + aux.getNumeroDeLivros());
+            System.out.println(messages.getString("a2p7") + aux.getSuspenso());
+            System.out.println(messages.getString("a2p8") +aux.getDiasDeSuspensao());
             System.out.println("|-----------------------------------|");
             System.out.println();
         }

@@ -153,9 +153,9 @@ public class Main
 
                              case 4:
                                  System.out.println(messages.getString("dnpr1"));
-                                 str = t.nextLine();
+                                 ano = t.nextInt();
 
-                                 correto = biblioteca.removePessoa(str);
+                                 correto = biblioteca.removePessoa(ano);
                                  if(correto)
                                  {
                                      System.out.println(messages.getString("prcs1"));
