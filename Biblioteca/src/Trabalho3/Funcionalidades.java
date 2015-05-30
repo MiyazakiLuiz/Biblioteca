@@ -190,7 +190,7 @@ public class Funcionalidades
         }
     } 
     
-    public void adicionaProfessor(String nome, int livros, boolean sus, int susD)
+    public void adicionaProfessor(String nome, int livros, boolean sus, int susD, int idade, String sonho)
     {
         if(this.readOnly == true)
         {
@@ -211,12 +211,12 @@ public class Funcionalidades
             System.out.println(messages.getString("a2pec"));
         }
         else{
-            Professor novo = new Professor(nome, livros, sus, susD);
+            Professor novo = new Professor(nome, livros, sus, susD, idade, sonho);
             listNome.add(novo);
         }
     }
     
-    public void adicionaAluno(String nome, int livros, boolean sus, int susD)
+    public void adicionaAluno(String nome, int livros, boolean sus, int susD, int idade, String sonho)
     {
         if(this.readOnly == true)
         {
@@ -237,12 +237,12 @@ public class Funcionalidades
             System.out.println(messages.getString("a2pec"));
         }
         else{
-            Aluno novo = new Aluno(nome, livros, sus, susD);
+            Aluno novo = new Aluno(nome, livros, sus, susD, idade, sonho);
             listNome.add(novo);
         }
     }
     
-    public void adicionaComunidade(String nome, int livros, boolean sus, int susD)
+    public void adicionaComunidade(String nome, int livros, boolean sus, int susD, int idade, String sonho)
     {   
         if(this.readOnly == true)
         {
@@ -263,7 +263,7 @@ public class Funcionalidades
             System.out.println(messages.getString("a2pec"));
         }
         else{
-            Comunidade novo = new Comunidade(nome, livros, sus, susD);
+            Comunidade novo = new Comunidade(nome, livros, sus, susD, idade, sonho);
             listNome.add(novo);
         }
     }
@@ -587,17 +587,17 @@ public class Funcionalidades
                     String[] values = pessoa.split(",");
                     if(Integer.parseInt(values[0]) == 0)
                     {
-                        listNome.add(new Professor(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4])));
+                        listNome.add(new Professor(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4]), Integer.parseInt(values[5]), values[6]));
                     }
                     
                     if(Integer.parseInt(values[0]) == 1)
                     {
-                        listNome.add(new Aluno(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4])));
+                        listNome.add(new Aluno(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4]), Integer.parseInt(values[5]), values[6]));
                     }
                     
                     if(Integer.parseInt(values[0]) == 2)
                     {
-                        listNome.add(new Comunidade(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4])));
+                        listNome.add(new Comunidade(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4]), Integer.parseInt(values[5]), values[6]));
                     }
 		}
 	}
@@ -921,7 +921,7 @@ public class Funcionalidades
             else if(x == 4)
                 x = 1;
             
-            pw.print(x + "," + aux.getNome() + "," + aux.getNumeroDeLivros() + "," + aux.getSuspenso() + "," + aux.getDiasDeSuspensao() + "\n");
+            pw.print(x + "," + aux.getNome() + "," + aux.getNumeroDeLivros() + "," + aux.getSuspenso() + "," + aux.getDiasDeSuspensao() + "," + aux.getIdade() + "," + aux.getSonho() + "\n");
         }
            
        arq.close();
