@@ -18,6 +18,9 @@ import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 
 /**
  *
@@ -25,13 +28,26 @@ import java.util.Comparator;
  */
 public class Funcionalidades 
 {
+    //Locale france = new Locale.Builder().setLanguage("fr").setRegion("CA").build();
+    //Locale japan = new Locale.Builder().setLanguage("ja").setScript("Kana").build();
     
+    //Locale japan = new Locale("ja");
         
     private static ArrayList<Pessoa> listNome = new ArrayList<Pessoa>();
     private static ArrayList<Livro> listLivros = new ArrayList<Livro>();
-    Calendar calendarioN = Calendar.getInstance();
+    private static ArrayList<Historico> listHistorico = new ArrayList<Historico>();
     
-    Calendar calendarioV = Calendar.getInstance();
+    private boolean readOnly = false;
+    private String lang;
+    private String country;
+    
+    private Locale currentLocale;
+    
+    private ResourceBundle messages;
+    
+    private Calendar calendarioN = Calendar.getInstance();
+    
+    private Calendar calendarioV = Calendar.getInstance();
     
     private int diaAtual;
     private int mesAtual;
@@ -44,16 +60,31 @@ public class Funcionalidades
     private int diferencaDias = 0;
     
     
-    
-    public boolean removePessoa(String a)
+    public boolean getReadOnly()
     {
+        return this.readOnly;
+    }
+    
+    public ResourceBundle getMessages()
+    {
+        return this.messages;
+    }
+    
+    
+    public boolean removePessoa(int a)
+    {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return false;
+        }
         String str;
         Pessoa rem = null;
         Livro rem2 = null;
         
         for(Pessoa aux : listNome)
         {
-            if (a.equals(aux.getNome()))
+            if (a == aux.getId())
             {
                 rem = aux;
             }
@@ -92,6 +123,11 @@ public class Funcionalidades
     
     public boolean removeLivro(String a)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return false;
+        }
         String str;
         Livro rem = null;
         Pessoa rem2 = null;
@@ -126,8 +162,13 @@ public class Funcionalidades
         return (this.listLivros.remove(rem));
     }
     
-    public void adicionaLivro(String nome, boolean empr, int diasParaDevolver, boolean text, String dono)
+    public void adicionaLivro(String nome, boolean empr, int diasParaDevolver, boolean text, String dono, String autor, String editora, int ano)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return;
+        }
         boolean encontrou = false;
         for(Livro aux: listLivros)
         {
@@ -140,20 +181,26 @@ public class Funcionalidades
         
         if(encontrou)
         {
-            System.out.println("Operacao invalida - Livro ja existe no acervo");
+            System.out.println(messages.getString("a2oplje"));
         }
         else{
-            Livro novo = new Livro(nome, empr, diasParaDevolver, text, dono);
+            Livro novo = new Livro(nome, empr, diasParaDevolver, text, dono, autor, editora, ano);
             listLivros.add(novo);
-            System.out.println("Livro adicionado com sucesso");    
+            System.out.println(messages.getString("a2las1"));    
         }
     } 
-    public void adicionaProfessor(String nome, int livros, boolean sus, int susD)
+    
+    public void adicionaProfessor(String nome, int livros, boolean sus, int susD, int idade, String sonho, int id)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return;
+        }
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
-            if(aux.getNome() == nome)
+            if(aux.getId() == id)
             {
                 encontrou = true;
                 break;
@@ -161,20 +208,25 @@ public class Funcionalidades
         }
         if(encontrou)
         {
-            System.out.println("Operacao invalida - Pessoa ja esta cadastrada");
+            System.out.println(messages.getString("a2pec"));
         }
         else{
-            Professor novo = new Professor(nome, livros, sus, susD);
+            Professor novo = new Professor(nome, livros, sus, susD, idade, sonho, id);
             listNome.add(novo);
         }
     }
     
-    public void adicionaAluno(String nome, int livros, boolean sus, int susD)
+    public void adicionaAluno(String nome, int livros, boolean sus, int susD, int idade, String sonho, int id)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return;
+        }
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
-            if(aux.getNome() == nome)
+            if(aux.getId() == id)
             {
                 encontrou = true;
                 break;
@@ -182,20 +234,25 @@ public class Funcionalidades
         }
         if(encontrou)
         {
-            System.out.println("Operacao invalida - Pessoa ja esta cadastrada");
+            System.out.println(messages.getString("a2pec"));
         }
         else{
-            Aluno novo = new Aluno(nome, livros, sus, susD);
+            Aluno novo = new Aluno(nome, livros, sus, susD, idade, sonho, id);
             listNome.add(novo);
         }
     }
     
-    public void adicionaComunidade(String nome, int livros, boolean sus, int susD)
+    public void adicionaComunidade(String nome, int livros, boolean sus, int susD, int idade, String sonho, int id)
     {   
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return;
+        }
         boolean encontrou = false;
         for(Pessoa aux: listNome)
         {
-            if(aux.getNome() == nome)
+            if(aux.getId() == id)
             {
                 encontrou = true;
                 break;
@@ -203,29 +260,34 @@ public class Funcionalidades
         }
         if(encontrou)
         {
-            System.out.println("Operacao invalida - Pessoa ja esta cadastrada");
+            System.out.println(messages.getString("a2pec"));
         }
         else{
-            Comunidade novo = new Comunidade(nome, livros, sus, susD);
+            Comunidade novo = new Comunidade(nome, livros, sus, susD, idade, sonho, id);
             listNome.add(novo);
         }
     }
     
-    public boolean emprestarLivro(String nomePessoa, String nomeLivro)
+    public boolean emprestarLivro(int id, String nomeLivro)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return false;
+        }
         Pessoa Pessoa = null;
         Livro Livro = null;
         
         for (Pessoa aux : listNome)
         {
-            if(aux.getNome().equals(nomePessoa))
+            if(aux.getId() == id)
             {
                 Pessoa = aux;
                 break;
             }
         }
         if(Pessoa == null){
-            System.out.println("Nome da pessoa nao encontrada");
+            System.out.println(messages.getString("a2nne"));
             return false;
         }
         
@@ -234,11 +296,14 @@ public class Funcionalidades
             if(aux.getNome().equals(nomeLivro))
             {
                 Livro = aux;
-                break;
+                if(Livro.getEmpr() != true)
+                {
+                    break;   
+                }
             }
         }
         if(Livro == null){
-            System.out.println("Titulo do livro nao encontrado");
+            System.out.println(messages.getString("a2tne"));
             return false;
         }
         
@@ -247,14 +312,14 @@ public class Funcionalidades
         {
             if(Pessoa.getNumeroDeLivrosMax() == 2 && Livro.getText())
             {
-                System.out.println("Operacao falhou - Comunidade nao pode ter livros texto");
+                System.out.println(messages.getString("a2cnlt"));
                 return false;
             }
             else
             {
                 if(Livro.getEmpr())
                 {
-                    System.out.println("Operacao falhou - Livro ja foi emprestado");
+                    System.out.println(messages.getString("a2lje"));
                     return false;
                 }
                 else
@@ -263,7 +328,8 @@ public class Funcionalidades
                     Livro.setDias(Pessoa.getlimiteDias());
                     Pessoa.setNumeroDeLivros(Pessoa.getNumeroDeLivros() + 1);
                     Livro.setAtualDono(Pessoa.getNome());
-                    System.out.println("Livro emprestado com sucesso");
+                    System.out.println(messages.getString("a2les"));
+                    this.listHistorico.add(new Historico(this.diaAtual, this.mesAtual, this.anoAtual, 0, 0, 0, Pessoa.getNome(), Livro.getNome()));
                     return true;
                 }
 
@@ -273,22 +339,22 @@ public class Funcionalidades
         else
         {
             if(Pessoa.getSuspenso())
-                System.out.println("Operacao falhou - Pessoa suspensa");
+                System.out.println(messages.getString("a2ps"));
             else
-                System.out.println("Operacao falhou - Tentativa de exceder o numero maximo de livros emprestados");
+                System.out.println(messages.getString("a2ten"));
             
             return false;
         }            
         
     }
     
-    public void numeroAtualDeLivros(String Nome)
+    public void numeroAtualDeLivros(int id)
     {
         Pessoa pessoa = null;
         
         for(Pessoa aux : this.listNome)
         {
-            if(aux.getNome().equals(Nome))
+            if(aux.getId() == id)
             {
                 pessoa = aux;
                 break;
@@ -300,13 +366,55 @@ public class Funcionalidades
             return;
         }
         
-        System.out.println("O usuario pode ter no maximo " + pessoa.getNumeroDeLivrosMax() + " livros");
-        System.out.println("Atualmente ele tem " + pessoa.getNumeroDeLivros() + " livros");
+        System.out.println(messages.getString("a2upnm1") + pessoa.getNumeroDeLivrosMax() + " " + messages.getString("a2upnm2"));
+        System.out.println(messages.getString("a2upnm3") + pessoa.getNumeroDeLivros() + " " + messages.getString("a2upnm2") + "\n");
     }
     
     
+    public void consultaLivros(int id)
+    {
+        boolean c = false;
+        String nomePessoa = null;
+        System.out.println(messages.getString("livrosqueapessoatem"));
+        
+        for(Pessoa aux : listNome)
+        {
+            if(aux.getId() == id)
+            {
+                nomePessoa = aux.getNome();
+            }
+        }
+        
+        if(nomePessoa == null)
+        {
+            return;
+        }
+        
+        //System.out.println(nomePessoa);
+        
+       
+        for(Livro aux: this.listLivros)
+        {
+            if(aux.getAtualDono().equals(nomePessoa))
+            {
+                System.out.println("> " + aux.getNome() + messages.getString("diasrestantes") + aux.getDias());
+                c = true;
+            }
+        }
+       
+        if(!c)
+            System.out.println("-");
+       
+        System.out.println();
+    }
+    
     public boolean devolverLivro(String nomePessoa, String nomeLivro)
     {
+        if(this.readOnly == true)
+        {
+            System.out.println(messages.getString("readonly"));
+            return false;
+        }
         Pessoa Pessoa = null;
         Livro Livro = null;
         
@@ -324,7 +432,11 @@ public class Funcionalidades
             if(aux.getNome().equals(nomeLivro) && Pessoa.getNome().equals(aux.getAtualDono()))
             {
                 Livro = aux;
-                break;
+                if(Livro.getEmpr() == true)
+                {
+                    break;
+                }
+                
             }
         }
         
@@ -339,14 +451,29 @@ public class Funcionalidades
             Livro.setAtualDono(nulo);
             Livro.setDias(0);
             Livro.setEmprestado(false);
-            System.out.println("Livro devolvido com sucesso");
+            
+            for(Historico aux : listHistorico)
+            {
+                if(aux.getDono().equals(Pessoa.getNome()) && aux.getLivro().equals(Livro.getNome()))
+                {
+                    aux.setDia(this.diaAtual);
+                    aux.setMes(this.mesAtual);
+                    aux.setAno(this.anoAtual);
+                }
+            }
+            
+            
+            System.out.println("\n" + messages.getString("a2lds"));
+            
+            
+            
             return true;
             
                 
         }
         else
         {
-            System.out.println("Operacao falhou - nome invalido");
+            System.out.println(messages.getString("a2ni"));
             return false;
         }
         
@@ -355,13 +482,13 @@ public class Funcionalidades
     
     public void PegarLivrosDoDono(String Dono)
     {
-        System.out.println("Os possiveis livros a serem retirados sao: ");
+        System.out.println(messages.getString("a2oplsr"));
         
         for(Livro aux : this.listLivros)
         {
             if(aux.getAtualDono() != null && aux.getAtualDono().equals(Dono))
             {
-                System.out.println(aux.getNome() + " - " + aux.getDias() + " dias restantes");
+                System.out.println(aux.getNome() + " - " + aux.getDias() + " " + messages.getString("a2dr"));
             }
         }
     }
@@ -418,14 +545,12 @@ public class Funcionalidades
         });
     }
     
-    
-    
     public void imprimeDatas()
     {
-        System.out.println("Data antiga: ");
+        System.out.println(messages.getString("a2data1"));
         System.out.println(this.diaAntigo + "/" + this.mesAntigo + "/" + this.anoAntigo);
         
-        System.out.println("Data atual: ");
+        System.out.println(messages.getString("a2data2"));
         System.out.println(this.diaAtual + "/" + this.mesAtual + "/" + this.anoAtual);
         System.out.println();
         
@@ -433,6 +558,36 @@ public class Funcionalidades
 
     }
     
+    public void imprimeHistorico()
+    {
+
+        for(Historico aux : listHistorico)
+        {
+           if(this.calendarioN.compareTo(aux.getCalendarA()) > 0 || (this.diaAtual == aux.getDiaA() && this.mesAtual == aux.getMesA() && this.anoAtual == aux.getAnoA()))
+           {
+                System.out.println(messages.getString("ih2") + aux.getDiaA() + "/" + aux.getMesA() + "/" + aux.getAnoA());
+                if(aux.getDiaN() == 0 && aux.getMesN() == 0 && aux.getAnoN() == 0)
+                {
+                    System.out.println(messages.getString("ih3") + " - ");
+                }
+                else
+                {
+                    if(this.calendarioN.compareTo(aux.getCalendarN()) < 0 && (this.diaAtual != aux.getDiaN() || this.mesAtual != aux.getMesN() || this.anoAtual != aux.getAnoN()))
+                    {
+                        System.out.println(messages.getString("ih3") + " - ");
+                    }
+                    else
+                    {
+                        System.out.println(messages.getString("ih3") + aux.getDiaN() + "/" + aux.getMesN() + "/" + aux.getAnoN());
+                    }
+                    
+                }
+                System.out.println(messages.getString("ih4") + aux.getDono());
+                System.out.println(messages.getString("ih5") + aux.getLivro());
+                System.out.println();
+           }
+        }
+    }
     
     
     public void preparaListaNome(String listaPessoa)
@@ -448,17 +603,17 @@ public class Funcionalidades
                     String[] values = pessoa.split(",");
                     if(Integer.parseInt(values[0]) == 0)
                     {
-                        listNome.add(new Professor(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4])));
+                        listNome.add(new Professor(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4]), Integer.parseInt(values[5]), values[6], Integer.parseInt(values[7])));
                     }
                     
                     if(Integer.parseInt(values[0]) == 1)
                     {
-                        listNome.add(new Aluno(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4])));
+                        listNome.add(new Aluno(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4]), Integer.parseInt(values[5]), values[6], Integer.parseInt(values[7])));
                     }
                     
                     if(Integer.parseInt(values[0]) == 2)
                     {
-                        listNome.add(new Comunidade(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4])));
+                        listNome.add(new Comunidade(values[1], Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4]), Integer.parseInt(values[5]), values[6], Integer.parseInt(values[7])));
                     }
 		}
 	}
@@ -485,7 +640,7 @@ public class Funcionalidades
                     
                 {
                     String[] values = livro.split(",");
-                    listLivros.add(new Livro(values[0], Boolean.parseBoolean(values[1]), Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), values[4]));
+                    listLivros.add(new Livro(values[0], Boolean.parseBoolean(values[1]), Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), values[4], values[5], values[6], Integer.parseInt(values[7])));
 		}
 	}
         
@@ -528,6 +683,39 @@ public class Funcionalidades
 	}
     }
     
+    public void preparaHistorico(String entregas_retornos)
+    {
+        Calendar calv = Calendar.getInstance();
+        Calendar caln = Calendar.getInstance();
+        try 
+        {
+		BufferedReader in = new BufferedReader(new FileReader(entregas_retornos));
+		String historico;
+                
+		while((historico = in.readLine()) != null)   
+                {
+                    String[] values = historico.split(",");
+                    /*calv.set(DATE, Integer.parseInt(values[0]));
+                    calv.set(MONTH, Integer.parseInt(values[1]));
+                    calv.set(YEAR, Integer.parseInt(values[2]));
+                    caln.set(DATE, Integer.parseInt(values[3]));
+                    caln.set(MONTH, Integer.parseInt(values[4]));
+                    caln.set(YEAR, Integer.parseInt(values[5]));*/
+                    listHistorico.add(new Historico(Integer.parseInt(values[0]), Integer.parseInt(values[1]),Integer.parseInt(values[2]), Integer.parseInt(values[3]),Integer.parseInt(values[4]), Integer.parseInt(values[5]),values[6], values[7]));
+		}
+	}
+        
+	catch(FileNotFoundException e) 
+        {
+		System.out.println("File " + entregas_retornos + " was not found!");
+	}
+        
+	catch(IOException e) 
+        {
+		System.out.println("Error reading the file!");
+	}
+    }
+    
     public void preparaDataAtual()
     {
         //calendarioN.set(MONTH, MONTH+1);
@@ -538,61 +726,37 @@ public class Funcionalidades
         
     }
     
+   
+    public void verInfoLivrosEmprestados()
+    {
+        for(Livro aux : listLivros)
+        {
+            if(aux.getEmpr() == true)
+            {
+                System.out.println(aux.getNome());
+                System.out.println(aux.getAtualDono());
+                //this.calcDifLivros(aux.getDias());
+            }
+        }
+    }
+   
+    
     public int calculaDiferenca()
     {
-        if(this.calendarioN.compareTo(this.calendarioV) == 0)
-        {
-            return 0;
-        }
-        else
-        {
-            this.diferencaDias = ((this.anoAtual - this.anoAntigo) * 365);
-            if(this.mesAtual < this.mesAntigo)
-            {
-                this.diferencaDias += (this.mesAntigo - this.mesAtual) * 30;
-            }
-            else
-            {
-                if(this.diferencaDias == 0)
-                {
-                    this.diferencaDias += (this.mesAtual - this.mesAntigo) * 30;
-                }
-                else
-                {
-                    this.diferencaDias -= (this.mesAtual - this.mesAntigo) * 30;
-                }
-                
-            }
-            
-            if(this.diaAtual < this.diaAntigo)
-            {
-                this.diferencaDias += (this.diaAntigo - this.diaAtual);
-            }
-            else
-            {
-                if((this.mesAtual - this.mesAntigo) == 0)
-                {
-                    this.diferencaDias += (this.diaAtual - this.diaAntigo);
-                }
-                else
-                {
-                    this.diferencaDias -= (this.diaAtual - this.diaAntigo);
-                }
-                
-            }
-            
-            System.out.println(this.diferencaDias);
-            return this.diferencaDias;
-        }
+        this.diferencaDias += (this.anoAtual - this.anoAntigo) * 365;
+        this.diferencaDias += (this.mesAtual - this.mesAntigo) * 30;
+        this.diferencaDias += this.diaAtual - this.diaAntigo;
+        //System.out.println(this.diferencaDias);
+        return this.diferencaDias;
     }
     
     
     public void atualizaDias(int a)
     {
         int teste;
+        boolean c = false;
         
-        
-        
+        System.out.println(messages.getString("livrosematraso"));
         
         for(Pessoa aux : listNome)
         {
@@ -611,12 +775,6 @@ public class Funcionalidades
             }
         }
         
-        
-        
-        
-        
-        
-        
         for(Livro aux : listLivros)
         {
             if(aux.getEmpr())
@@ -624,6 +782,7 @@ public class Funcionalidades
                 teste = aux.getDias() - a;
                 if(teste < 0)
                 {
+                    c = true;
                     for(Pessoa aux2 : listNome)
                     {
                         if(aux.getAtualDono() != null && aux.getAtualDono().equals(aux2.getNome()))
@@ -632,6 +791,7 @@ public class Funcionalidades
                         }
                     }
                     aux.setDias(teste);
+                   // System.out.println(messages.getString());
                 }
                 else
                 {
@@ -639,19 +799,86 @@ public class Funcionalidades
                 }
             }
         }
+        if(!c)
+        {
+            System.out.println(" - ");
+        }
         
     }
     
     
-    public Funcionalidades (String listaPessoa, String listaLivro, String data) 
+    public boolean digitaDias()
+    {
+        Scanner s = new Scanner(System.in);
+        int valor = 0;
+        System.out.println(messages.getString("escolhedia"));
+        valor = s.nextInt();
+        if(valor != 0 && valor > 0 && valor < 31)
+        {
+            this.diaAtual = valor;
+            this.calendarioN.set(DATE, valor);
+            valor = s.nextInt();
+            if(valor != 0 && valor > 0 && valor < 13)
+            {
+                this.mesAtual = valor;
+                this.calendarioN.set(MONTH, valor);
+                valor = s.nextInt();
+                if(valor != 0 && valor > 0)
+                {
+                    this.anoAtual = valor;
+                    this.calendarioN.set(YEAR, valor);
+                    return true;
+                }
+                
+            }
+            
+        }
+        return false;
+            
+    }
+        
+    
+    
+    public Funcionalidades (String listaPessoa, String listaLivro, String data, String entregas_retornos) 
     {
         int dif;
+        boolean teste;
+        Scanner novo = new Scanner(System.in);
+        System.out.println("Digite o código da língua e do país: ");
+        this.lang = novo.nextLine();
+        this.country = novo.nextLine();
+        if(this.lang.length() != 2 || this.country.length() != 2)
+        {
+            currentLocale = new Locale("en", "US");
+        }
+        else
+        {
+            currentLocale = new Locale(lang, country);
+        }
+        messages = ResourceBundle.getBundle("MessagesBundle", currentLocale);
+        //System.out.println(messages.getString("oi"));
+        
         this.preparaListaNome(listaPessoa);
         this.preparaListaLivro(listaLivro);
         this.preparaDataAntiga(data);
-        this.preparaDataAtual();
+        this.preparaHistorico(entregas_retornos);
+        teste = this.digitaDias();
+        if(teste == false)
+        {
+            this.preparaDataAtual();
+        }
+        
         dif = this.calculaDiferenca();
-        this.atualizaDias(dif);
+        if(dif < 0)
+        {
+            this.readOnly = true;
+        }
+        else
+        {
+            this.atualizaDias(dif);
+        }
+        
+        
         
         
         
@@ -664,11 +891,14 @@ public class Funcionalidades
         for(Livro aux : listLivros)  
         {
             System.out.println("|-----------------------------|");
-            System.out.println("Titulo: " + aux.getNome());
-            System.out.println("Emprestado: " + aux.getEmpr());
-            System.out.println("Dias para o livro chegar: " + aux.getDias()); 
-            System.out.println("Tipo texto: " + aux.getText()); 
-            System.out.println("Livro com: " + aux.getAtualDono());
+            System.out.println(messages.getString("a2l1") + aux.getNome());
+            System.out.println(messages.getString("a2l2") + aux.getAutor());
+            System.out.println(messages.getString("a2l3") + aux.getEdtora());
+            System.out.println(messages.getString("a2l4") + aux.getAno());
+            System.out.println(messages.getString("a2l5") + aux.getEmpr());
+            System.out.println(messages.getString("a2l6") + aux.getDias()); 
+            System.out.println(messages.getString("a2l7") + aux.getText()); 
+            System.out.println(messages.getString("a2l8") + aux.getAtualDono());
             System.out.println("|-----------------------------|");
             System.out.println();
         }
@@ -680,18 +910,21 @@ public class Funcionalidades
         for(Pessoa aux : listNome)  
         {
             System.out.println("|-----------------------------------|");
-            System.out.println("Nome: " + aux.getNome());  
-            System.out.println("Numero maximo de livros: " + aux.getNumeroDeLivrosMax()); 
-            System.out.println("Numero de livros com a pessoa: " + aux.getNumeroDeLivros());
-            System.out.println("Suspenso: " + aux.getSuspenso());
-            System.out.println("Dias de suspenso: " +aux.getDiasDeSuspensao());
+            System.out.println(messages.getString("a2p1") + aux.getNome());  
+            System.out.println(messages.getString("a2p2") + aux.getId());
+            System.out.println(messages.getString("a2p3") + aux.getIdade());
+            System.out.println(messages.getString("a2p4") + aux.getSonho());
+            System.out.println(messages.getString("a2p5") + aux.getNumeroDeLivrosMax()); 
+            System.out.println(messages.getString("a2p6") + aux.getNumeroDeLivros());
+            System.out.println(messages.getString("a2p7") + aux.getSuspenso());
+            System.out.println(messages.getString("a2p8") +aux.getDiasDeSuspensao());
             System.out.println("|-----------------------------------|");
             System.out.println();
         }
         
     }
     
-    public void fechaArquivo(String a, String b, String c) throws IOException
+    public void fechaArquivo(String a, String b, String c, String d) throws IOException
     {
         
         FileWriter arq = new FileWriter(a);
@@ -707,7 +940,7 @@ public class Funcionalidades
             else if(x == 4)
                 x = 1;
             
-            pw.print(x + "," + aux.getNome() + "," + aux.getNumeroDeLivros() + "," + aux.getSuspenso() + "," + aux.getDiasDeSuspensao() + "\n");
+            pw.print(x + "," + aux.getNome() + "," + aux.getNumeroDeLivros() + "," + aux.getSuspenso() + "," + aux.getDiasDeSuspensao() + "," + aux.getIdade() + "," + aux.getSonho() + "," + aux.getId() + "\n");
         }
            
        arq.close();
@@ -717,7 +950,7 @@ public class Funcionalidades
        
        for(Livro aux : this.listLivros)
        {
-           pw2.print(aux.getNome() + "," + aux.getEmpr() + "," + aux.getDias() + "," + aux.getText() + "," + aux.getAtualDono() + "\n");
+           pw2.print(aux.getNome() + "," + aux.getEmpr() + "," + aux.getDias() + "," + aux.getText() + "," + aux.getAtualDono() + "," + aux.getAutor() + "," + aux.getEdtora() + "," + aux.getAno() + "\n");
            
        
        }
@@ -728,13 +961,29 @@ public class Funcionalidades
        FileWriter arq3 = new FileWriter(c);
        PrintWriter pw3 = new PrintWriter(arq3);
        
-       
+       if(this.readOnly == false)
+       {
            pw3.print(this.diaAtual + "," + this.mesAtual + "," + this.anoAtual + "\n");
-           
+       }
+       else
+       {
+           pw3.print(this.diaAntigo + "," + this.mesAntigo + "," + this.anoAntigo + "\n");
+       }
        
-       
+
        
        arq3.close();
+       
+       
+       FileWriter arq4 = new FileWriter(d);
+       PrintWriter pw4 = new PrintWriter(arq4);
+       
+       for(Historico aux : this.listHistorico)
+       {
+           pw4.print(aux.getDiaA()+ "," + aux.getMesA() + "," + aux.getAnoA() + "," + aux.getDiaN() + "," + aux.getMesN() + "," + aux.getAnoN() + "," + aux.getDono() + "," + aux.getLivro()+ "\n");
+       }
+       
+       arq4.close();
        
     }
     

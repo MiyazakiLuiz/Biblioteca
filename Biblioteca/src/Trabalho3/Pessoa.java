@@ -4,6 +4,12 @@ package Trabalho3;
 public abstract class Pessoa 
 {
     private String nome;
+    private int idade;
+    private String sonhos_e_esperancas;
+    private int id;
+    
+    
+    
     private int numeroDeLivros;
     private int numeroDeLivrosMax;    
     private int limiteDias;
@@ -24,13 +30,41 @@ public abstract class Pessoa
     public void setNome(String a)
     {
         this.nome = a;
-        /*this.numeroDeLivros = 0;
-        this.suspenso = false;*/
+    }
+    
+    public void setSonho(String a)
+    {
+        this.sonhos_e_esperancas = a;
+    }
+    
+    public void setIdade(int a)
+    {
+        this.idade = a;
+    }
+    
+    public void setId(int a)
+    {
+        this.id = a;
     }
     
     public String getNome()
     {
         return this.nome;
+    }
+    
+    public String getSonho()
+    {
+        return this.sonhos_e_esperancas;
+    }
+    
+    public int getIdade()
+    {
+        return this.idade;
+    }
+    
+    public int getId()
+    {
+        return this.id;
     }
     
     /*void Pessoa(String a)

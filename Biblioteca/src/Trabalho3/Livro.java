@@ -4,18 +4,25 @@ package Trabalho3;
 public class Livro 
 {
     private String titulo;
+    private String editora;
+    private String autor;
+    private int ano;
+    
     private boolean emprestado;
     private int diasRestantes;
     private boolean text;
     private String atualDono;
 
-    Livro(String a, boolean b, int c, boolean d, String e) 
+    Livro(String a, boolean b, int c, boolean d, String e, String f, String g, int h) 
     {
         this.titulo = a;
         this.emprestado = b;
         this.diasRestantes = c;  
         this.text = d;
         this.atualDono = e;
+        this.autor = f;
+        this.editora = g;
+        this.ano = h;
     }
     
     public void setAtualDono(String a)
@@ -36,6 +43,21 @@ public class Livro
     public String getNome()
     {
         return this.titulo;
+    }
+    
+    public String getAutor()
+    {
+        return this.autor;
+    }
+    
+    public String getEdtora()
+    {
+        return this.editora;
+    }
+    
+    public int getAno()
+    {
+        return this.ano;
     }
     
     public boolean getText()
