@@ -25,6 +25,7 @@ public class Main
         
         Scanner s = new Scanner(System.in);
         Scanner t = new Scanner(System.in);
+        Scanner u = new Scanner(System.in);
 
         String a = "listaPessoa.csv";
         String b = "listaLivro.csv";
@@ -109,13 +110,26 @@ public class Main
                                 System.out.println(messages.getString("111p"));
                                 System.out.println(messages.getString("112a"));
                                 System.out.println(messages.getString("113c"));
+                                while(!s.hasNextInt())
+                                {
+                                    str = s.nextLine();
+                                }
                                 escolha2 = s.nextInt();
                                 System.out.println(messages.getString("1111d"));
-                                t.next();
-                                str = t.nextLine();
+                                //t.next();
+                                str = u.nextLine();
+                                
                                 System.out.println(messages.getString("1111id"));
+                                while(!t.hasNextInt())
+                                {
+                                    str = t.nextLine();
+                                }
                                 id = t.nextInt();
                                 System.out.println(messages.getString("1111i"));
+                                while(!t.hasNextInt())
+                                {
+                                    str = t.nextLine();
+                                }
                                 ano = t.nextInt();
                                 System.out.println(messages.getString("1111s"));
                                 str2 = s.nextLine();
@@ -209,16 +223,16 @@ public class Main
                              case 1:
                                  System.out.println(messages.getString("dtl1"));
 
-                                 str = t.nextLine();
+                                 str = u.nextLine();
                                  
                                  System.out.println(messages.getString("autorP"));
-                                 str2 = t.nextLine();
+                                 str2 = u.nextLine();
                                  
                                  System.out.println(messages.getString("editoraP"));
-                                 str3 = t.nextLine();
+                                 str3 = u.nextLine();
                                  
                                  System.out.println(messages.getString("anoP"));
-                                 ano = t.nextInt();
+                                 ano = s.nextInt();
 
                                  System.out.println(messages.getString("tl"));
                                  System.out.println(messages.getString("tl1"));

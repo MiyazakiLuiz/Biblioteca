@@ -720,6 +720,11 @@ public class Funcionalidades
     {
         //calendarioN.set(MONTH, MONTH+1);
         this.diaAtual = calendarioN.get(DATE);
+        if(this.diaAtual == 31)
+        {
+            this.diaAtual = 30;
+            calendarioN.set(DATE, 30);
+        }
         this.mesAtual = calendarioN.get(MONTH) + 1;
         this.anoAtual = calendarioN.get(YEAR);
         calendarioN.set(MONTH, this.mesAtual);
