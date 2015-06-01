@@ -31,11 +31,11 @@ public class Historico
     private int mesN;
     private int anoN;
     
-    private String Dono;
+    private int Dono;
     
     private String Livro;
     
-    public Historico(int diaA, int mesA, int anoA, int diaN, int mesN, int anoN, String Dono, String Livro)
+    public Historico(int diaA, int mesA, int anoA, int diaN, int mesN, int anoN, int Dono, String Livro)
     {
         this.diaA = diaA;
         this.mesA = mesA;
@@ -57,74 +57,121 @@ public class Historico
         this.calendarN.set(YEAR, this.anoN);
     }
     
+    /*
+    muda o dia do historico
+    input: novo dia
+    */
     public void setDia(int a)
     {
         this.diaN = a;
         this.calendarN.set(DATE, this.diaN);
     }
     
+    /*
+    muda o mes do historico
+    input: novo mes
+    */
     public void setMes(int a)
     {
         this.mesN = a;
         this.calendarN.set(MONTH, this.mesN);
     }
     
+    /*
+    muda o ano do historico
+    input: novo ano
+    */
     public void setAno(int a)
     {
         this.anoN = a;
         this.calendarN.set(YEAR, this.anoN);
     }
     
-    
-    
+    /*
+    retorna o calendario antigo
+    output: calendario antigo
+    */
     public Calendar getCalendarA()
     {
         return this.calendarA;
     }
     
+    /*
+    retorna o calendario novo
+    output: calendario novo
+    */
     public Calendar getCalendarN()
     {
         return this.calendarN;
     }
     
+    /*
+    retorna o dia antigo
+    output: dia antigo
+    */
     public int getDiaA()
     {
         return this.diaA;
     }
     
+    /*
+    retorna o mes antigo
+    output: mes antigo
+    */
     public int getMesA()
     {
         return this.mesA;
     }
     
+    /*
+    retorna o ano antigo
+    output: ano antigo
+    */
     public int getAnoA()
     {
         return this.anoA;
     }
     
+    /*
+    retorna o dia novo
+    output: dia novo
+    */
     public int getDiaN()
     {
         return this.diaN;
     }
     
+    /*
+    retorna o mes novo
+    output: mes novo
+    */
     public int getMesN()
     {
         return this.mesN;
     }
     
+    /*
+    retorna o ano novo
+    output: ano novo
+    */
     public int getAnoN()
     {
         return this.anoN;
     }
-            
     
-    
-    
-    public String getDono()
+     /*
+    retorna a pessoa que esta no historico
+    output: a pessoa que esta no historico
+    */
+    public int getDono()
     {
         return this.Dono;
     }
     
+    /*
+    retorna o titulo do livro
+    output: o titulo do livro
+    */
     public String getLivro()
     {
         return this.Livro;

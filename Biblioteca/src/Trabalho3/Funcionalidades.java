@@ -370,7 +370,7 @@ public class Funcionalidades
                     Pessoa.setNumeroDeLivros(Pessoa.getNumeroDeLivros() + 1);
                     Livro.setAtualDono(Pessoa.getId());
                     System.out.println(messages.getString("a2les"));
-                    this.listHistorico.add(new Historico(this.diaAtual, this.mesAtual, this.anoAtual, 0, 0, 0, Pessoa.getNome(), Livro.getNome()));
+                    this.listHistorico.add(new Historico(this.diaAtual, this.mesAtual, this.anoAtual, 0, 0, 0, Pessoa.getId(), Livro.getNome()));
                     return true;
                 }
 
@@ -479,6 +479,7 @@ public class Funcionalidades
             }
         }
         
+        
         for (Livro aux : listLivros)
         {
             if(aux.getNome().equals(nomeLivro) && aux.getAtualDono() != 0 && Pessoa.getId() == aux.getAtualDono())
@@ -488,7 +489,6 @@ public class Funcionalidades
                 {
                     break;
                 }
-                
             }
         }
         
@@ -506,7 +506,7 @@ public class Funcionalidades
             
             for(Historico aux : listHistorico)
             {
-                if(aux.getDono().equals(Pessoa.getNome()) && aux.getLivro().equals(Livro.getNome()))
+                if(aux.getDono() == Pessoa.getId() && aux.getLivro().equals(Livro.getNome()))
                 {
                     aux.setDia(this.diaAtual);
                     aux.setMes(this.mesAtual);
@@ -795,7 +795,7 @@ public class Funcionalidades
                     caln.set(DATE, Integer.parseInt(values[3]));
                     caln.set(MONTH, Integer.parseInt(values[4]));
                     caln.set(YEAR, Integer.parseInt(values[5]));*/
-                    listHistorico.add(new Historico(Integer.parseInt(values[0]), Integer.parseInt(values[1]),Integer.parseInt(values[2]), Integer.parseInt(values[3]),Integer.parseInt(values[4]), Integer.parseInt(values[5]),values[6], values[7]));
+                    listHistorico.add(new Historico(Integer.parseInt(values[0]), Integer.parseInt(values[1]),Integer.parseInt(values[2]), Integer.parseInt(values[3]),Integer.parseInt(values[4]), Integer.parseInt(values[5]),Integer.parseInt(values[6]), values[7]));
 		}
 	}
         
