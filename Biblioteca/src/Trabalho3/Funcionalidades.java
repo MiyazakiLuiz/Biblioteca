@@ -59,18 +59,25 @@ public class Funcionalidades
     
     private int diferencaDias = 0;
     
-    
+    // ReadOnly é uma flag que impossibilita algumas funcoes, caso
+    //o usuario tente fazer modificacoes no passado.
     public boolean getReadOnly()
     {
         return this.readOnly;
     }
     
+    // Isso serve para utilizar o locale
     public ResourceBundle getMessages()
     {
         return this.messages;
     }
     
-    
+    /* 
+    Tira uma pessoa da listNome e ao fechar o programa
+    é salvo a lista sem essa pessoa em um arquivo
+    input: id da pessoa
+    output: boolean, se remover true, se nao false.
+    */
     public boolean removePessoa(int a)
     {
         if(this.readOnly == true)
@@ -119,8 +126,12 @@ public class Funcionalidades
         return (this.listNome.remove(rem));
     }
     
-    
-    
+    /* 
+    Tira um livro da listLivros e ao fechar o programa
+    é salvo a lista sem esse livro em um arquivo
+    input: titulo do livro
+    output: boolean, se remover true, se nao false.
+    */
     public boolean removeLivro(String a)
     {
         if(this.readOnly == true)
@@ -162,6 +173,13 @@ public class Funcionalidades
         return (this.listLivros.remove(rem));
     }
     
+    /* 
+    Adiciona um livro da listLivros e ao fechar o programa
+    é salvo a lista com esse livro em um arquivo
+    input: titulo do livro, false(indicando que nao esta emprestado), 
+    (dias para devolver), texto(true) ou geral(false), nome do dono(null, inicialmente),
+    nome do autor, nome da editora e o ano do livro.
+    */
     public void adicionaLivro(String nome, boolean empr, int diasParaDevolver, boolean text, String dono, String autor, String editora, int ano)
     {
         if(this.readOnly == true)
@@ -190,6 +208,12 @@ public class Funcionalidades
         }
     } 
     
+    /* 
+    Adiciona um professor da listNome e ao fechar o programa
+    é salvo a lista com esse professor em um arquivo
+    input: nome da pessoa, quantidade de livros(6), nao suspenso(false), 
+    dias de suspensao, idade, sonhos e id 
+    */
     public void adicionaProfessor(String nome, int livros, boolean sus, int susD, int idade, String sonho, int id)
     {
         if(this.readOnly == true)
@@ -216,6 +240,12 @@ public class Funcionalidades
         }
     }
     
+    /* 
+    Adiciona um aluno da listNome e ao fechar o programa
+    é salvo a lista com esse aluno em um arquivo
+    input: nome da pessoa, quantidade de livros(4), nao suspenso(false), 
+    dias de suspensao, idade, sonhos e id
+    */
     public void adicionaAluno(String nome, int livros, boolean sus, int susD, int idade, String sonho, int id)
     {
         if(this.readOnly == true)
@@ -242,6 +272,12 @@ public class Funcionalidades
         }
     }
     
+    /* 
+    Adiciona um comunidade da listNome e ao fechar o programa
+    é salvo a lista com esse comunidade em um arquivo
+    input: nome da pessoa, quantidade de livros(2), nao suspenso(false), 
+    dias de suspensao, idade, sonhos e id
+    */
     public void adicionaComunidade(String nome, int livros, boolean sus, int susD, int idade, String sonho, int id)
     {   
         if(this.readOnly == true)
@@ -268,6 +304,11 @@ public class Funcionalidades
         }
     }
     
+    /*
+    Marca um livro como emprestado, com quem esta e incrementa a quantidade de livros com a pessoa que o pegou
+    input: id da pessoa e o nome do livro
+    output: emprestou(true), nao emprestou(false)
+    */
     public boolean emprestarLivro(int id, String nomeLivro)
     {
         if(this.readOnly == true)
@@ -348,6 +389,11 @@ public class Funcionalidades
         
     }
     
+    /*
+    Imprime uma mensagem indicando a quantidade maxima de livros que a pessoa pode ter
+    e outra mensagem indicando a quantidade de livros que ela tem emprestado
+    input: id da pessoa
+    */
     public void numeroAtualDeLivros(int id)
     {
         Pessoa pessoa = null;
@@ -370,7 +416,10 @@ public class Funcionalidades
         System.out.println(messages.getString("a2upnm3") + pessoa.getNumeroDeLivros() + " " + messages.getString("a2upnm2") + "\n");
     }
     
-    
+    /*
+    Imprime os livros que estao com determinada pessoa
+    input: ID da pessoa
+    */
     public void consultaLivros(int id)
     {
         boolean c = false;
@@ -389,13 +438,10 @@ public class Funcionalidades
         {
             return;
         }
-        
-        //System.out.println(nomePessoa);
-        
-       
+      
         for(Livro aux: this.listLivros)
         {
-            if(aux.getAtualDono().equals(nomePessoa))
+            if(aux.getAtualDono() != null && aux.getAtualDono().equals(nomePessoa))
             {
                 System.out.println("> " + aux.getNome() + messages.getString("diasrestantes") + aux.getDias());
                 c = true;
@@ -408,7 +454,13 @@ public class Funcionalidades
         System.out.println();
     }
     
-    public boolean devolverLivro(String nomePessoa, String nomeLivro)
+    /*
+    Devolve o livro para a biblioteca, muda as variaveis de emprestimo do livro
+    Emprestado para false, AtualDono para null e DiasRestante  para 0
+    input: ID da pessoa e o nome do livro
+    output: devolvido(true), nao devolvido(false)
+    */
+    public boolean devolverLivro(int id, String nomeLivro)
     {
         if(this.readOnly == true)
         {
@@ -420,7 +472,7 @@ public class Funcionalidades
         
         for (Pessoa aux : listNome)
         {
-            if(aux.getNome().equals(nomePessoa))
+            if(aux.getId() == id)
             {
                 Pessoa = aux;
                 break;
@@ -429,7 +481,7 @@ public class Funcionalidades
         
         for (Livro aux : listLivros)
         {
-            if(aux.getNome().equals(nomeLivro) && Pessoa.getNome().equals(aux.getAtualDono()))
+            if(aux.getNome().equals(nomeLivro) && aux.getAtualDono() != null && Pessoa.getNome().equals(aux.getAtualDono()))
             {
                 Livro = aux;
                 if(Livro.getEmpr() == true)
@@ -480,8 +532,28 @@ public class Funcionalidades
         
     }
     
-    public void PegarLivrosDoDono(String Dono)
+    /*
+    Imprime os livros que estao com determinada pessoa
+    input: ID da pessoa 
+    */
+    public void PegarLivrosDoDono(int id)
     {
+        String Dono = "nullo";
+       
+        for(Pessoa aux : listNome)
+        {
+            if(aux.getId() == id)
+            {
+                Dono = aux.getNome();
+                break;
+            }
+        }
+       
+        if(Dono.equals("nullo"))
+        {
+            return;
+        }
+        
         System.out.println(messages.getString("a2oplsr"));
         
         for(Livro aux : this.listLivros)
@@ -493,7 +565,9 @@ public class Funcionalidades
         }
     }
     
-    
+    /*
+    ordena a lista de pessoas por ordem alfabetica(tabela ascii) dos nomes
+    */
     public static void ordenaListaNome()
     {
         
@@ -519,7 +593,9 @@ public class Funcionalidades
         });
     }
     
-    
+    /*
+    ordena a lista de livros por ordem alfabetica(tabela ascii) dos titulos 
+    */
     public static void ordenaListaLivro()
     {
         
@@ -545,6 +621,9 @@ public class Funcionalidades
         });
     }
     
+    /*
+    Imprime a data que esta no arquivo(ultima data de modificacoes) e, a data atual ou de consulta
+    */
     public void imprimeDatas()
     {
         System.out.println(messages.getString("a2data1"));
@@ -558,6 +637,10 @@ public class Funcionalidades
 
     }
     
+    /*
+    imprime um historico indicando a data de quando uma pessoa pegou um livro 
+    e quando ela devolveu
+    */
     public void imprimeHistorico()
     {
 
@@ -589,7 +672,9 @@ public class Funcionalidades
         }
     }
     
+    /*
     
+    */
     public void preparaListaNome(String listaPessoa)
     {
         try 
@@ -629,6 +714,9 @@ public class Funcionalidades
 	}
     }
     
+    /*
+    
+    */
     public void preparaListaLivro(String listaLivro)
     {
         try 
@@ -655,6 +743,9 @@ public class Funcionalidades
 	}
     }
     
+    /*
+    
+    */
     public void preparaDataAntiga(String data)
     {
         try 
@@ -683,6 +774,9 @@ public class Funcionalidades
 	}
     }
     
+    /*
+    
+    */
     public void preparaHistorico(String entregas_retornos)
     {
         Calendar calv = Calendar.getInstance();
@@ -716,6 +810,9 @@ public class Funcionalidades
 	}
     }
     
+    /*
+    
+    */
     public void preparaDataAtual()
     {
         //calendarioN.set(MONTH, MONTH+1);
@@ -731,7 +828,9 @@ public class Funcionalidades
         
     }
     
-   
+   /*
+    informa por meio de mensagem, todos os livros que estao emprestados e com quem estao
+    */
     public void verInfoLivrosEmprestados()
     {
         for(Livro aux : listLivros)
@@ -745,7 +844,10 @@ public class Funcionalidades
         }
     }
    
-    
+    /*
+    funcao usada para calcular quantos dias tem entre a data do arquivo e a data atual
+    output: inteiro indicando a diferenca de dias
+    */
     public int calculaDiferenca()
     {
         this.diferencaDias += (this.anoAtual - this.anoAntigo) * 365;
@@ -755,7 +857,9 @@ public class Funcionalidades
         return this.diferencaDias;
     }
     
+    /*
     
+    */
     public void atualizaDias(int a)
     {
         int teste;
@@ -796,7 +900,6 @@ public class Funcionalidades
                         }
                     }
                     aux.setDias(teste);
-                   // System.out.println(messages.getString());
                 }
                 else
                 {
@@ -811,7 +914,9 @@ public class Funcionalidades
         
     }
     
+    /*
     
+    */
     public boolean digitaDias()
     {
         Scanner s = new Scanner(System.in);
@@ -843,7 +948,9 @@ public class Funcionalidades
     }
         
     
+    /*
     
+    */
     public Funcionalidades (String listaPessoa, String listaLivro, String data, String entregas_retornos) 
     {
         int dif;
@@ -890,7 +997,9 @@ public class Funcionalidades
     }
     
     
-    
+    /*
+    Exibe na tela todos os livros que existem na biblioteca
+    */
     public void imprimeLivros()
     {
         for(Livro aux : listLivros)  
@@ -910,6 +1019,9 @@ public class Funcionalidades
         
     }
     
+    /*
+    Exibe na tela todos as pessoas que existem no sistema
+    */
     public void imprimePessoas()
     {
         for(Pessoa aux : listNome)  
@@ -929,6 +1041,10 @@ public class Funcionalidades
         
     }
     
+    /*
+    salva as listas de livros e de pessoas, a nova data caso nao estiver no ReadOnly, o novo historico
+    em arquivos e os fecha
+    */
     public void fechaArquivo(String a, String b, String c, String d) throws IOException
     {
         

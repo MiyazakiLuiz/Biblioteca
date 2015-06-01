@@ -6,14 +6,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
-import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
 public class Main 
 {
     public static void main(String args[]) throws IOException, URISyntaxException
     {
-        boolean readMode = false;
+        boolean readMode = false; //variavel usada para evitar que o usuário faca alteracoes no passado
         ResourceBundle messages;
         int escolha = 0;
         int escolha2 = 0;
@@ -21,7 +19,6 @@ public class Main
         int ano;
         int id;
         boolean correto;
-        //String tutturu = "tutturu";
         
         Scanner s = new Scanner(System.in);
         Scanner t = new Scanner(System.in);
@@ -41,24 +38,21 @@ public class Main
             System.out.println(messages.getString("readonly1"));
             System.out.println(messages.getString("readonly2"));
         }
-       // System.out.println(readMode);
-        //System.out.println(messages.getString("oi"));
-        
 
         while (ciclo)
         {
             
            
-                System.out.println(messages.getString("choose1"));
+                System.out.println(messages.getString("choose1"));//escolha um item:
                 System.out.println(messages.getString("1pessoa"));
                 System.out.println(messages.getString("2livro"));
                 System.out.println(messages.getString("3data"));
                 System.out.println(messages.getString("4historico"));
                 System.out.println(messages.getString("5fechar"));
 
+                //caso o usuario nao escolha um inteiro como opcao, estamos tratando isso aqui
                 if(s.hasNextInt())
-                {
-                    
+                {                    
                     escolha = s.nextInt();
                     if(escolha == 42)
                     {
@@ -87,14 +81,15 @@ public class Main
             
                 switch (escolha)
                 {
-                    case 1:
-                        System.out.println(messages.getString("11p"));
-                        System.out.println(messages.getString("12o"));
-                        System.out.println(messages.getString("13p"));
-                        System.out.println(messages.getString("14r"));
-                        System.out.println(messages.getString("15l"));
-                        System.out.println(messages.getString("16v"));
-
+                    case 1://pessoa
+                        System.out.println(messages.getString("11p"));//inserir
+                        System.out.println(messages.getString("12o"));//ordenar
+                        System.out.println(messages.getString("13p"));//imprimir
+                        System.out.println(messages.getString("14r"));//remover
+                        System.out.println(messages.getString("15l"));//livros com a pessoa
+                        System.out.println(messages.getString("16v"));//voltar
+                        
+                        //caso o usuario nao escolha um inteiro, estamos tratando isso aqui
                         if(s.hasNextInt())
                         {
                             escolha = s.nextInt();
@@ -106,7 +101,7 @@ public class Main
                         }
                         switch (escolha)
                         {
-                             case 1:
+                             case 1://inserir
                                 System.out.println(messages.getString("111p"));
                                 System.out.println(messages.getString("112a"));
                                 System.out.println(messages.getString("113c"));
@@ -114,37 +109,36 @@ public class Main
                                 {
                                     str = s.nextLine();
                                 }
-                                escolha2 = s.nextInt();
+                                escolha2 = s.nextInt(); //professor, aluno ou comunidade?
                                 System.out.println(messages.getString("1111d"));
-                                //t.next();
-                                str = u.nextLine();
+                                str = u.nextLine(); //nome
                                 
                                 System.out.println(messages.getString("1111id"));
                                 while(!t.hasNextInt())
                                 {
                                     str = t.nextLine();
                                 }
-                                id = t.nextInt();
+                                id = t.nextInt(); //id
                                 System.out.println(messages.getString("1111i"));
                                 while(!t.hasNextInt())
                                 {
                                     str = t.nextLine();
                                 }
-                                ano = t.nextInt();
+                                ano = t.nextInt(); //idade
+                                
                                 System.out.println(messages.getString("1111s"));
-                                str2 = s.nextLine();
+                                str2 = s.nextLine(); //sonhos
                                 str2 = s.nextLine();
                                 
-                                if(escolha2 == 1)
+                                if(escolha2 == 1)//professor
                                 {
-
                                     biblioteca.adicionaProfessor(str, 0, false, 0, ano, str2, id);
                                 }
-                                else if (escolha2 == 2)
+                                else if(escolha2 == 2)//aluno
                                 {
                                     biblioteca.adicionaAluno(str, 0, false, 0, ano, str2, id);
                                 }
-                                else if (escolha2 == 3)
+                                else if(escolha2 == 3)//comunidade
                                 {
                                     biblioteca.adicionaComunidade(str, 0, false, 0, ano, str2, id);
                                 }
@@ -154,20 +148,20 @@ public class Main
 
                                 break;
 
-                             case 2:
+                             case 2://ordenar
 
                                  biblioteca.ordenaListaNome();
                                  System.out.println(messages.getString("lno1"));
                                  System.out.println();
                                  break;
 
-                             case 3:
+                             case 3://imprimir
 
                                  biblioteca.imprimePessoas();
 
                                  break;
 
-                             case 4:
+                             case 4://remover
                                  System.out.println(messages.getString("dnpr1"));
                                  ano = t.nextInt();
 
@@ -184,31 +178,33 @@ public class Main
                                  System.out.println();
                                  break;
 
-                             case 5:
+                             case 5://livros com a pessoa
                                  System.out.println(messages.getString("dnp1"));
                                  id = t.nextInt();
                                  biblioteca.consultaLivros(id);
                                  
                                  break;
 
-                             case 6: 
+                             case 6://voltar 
                                  break;
-                             default:
+                                 
+                             default://mensagem em caso do usuario nao escolher uma opcao valida
                                  System.out.println(messages.getString("eegg"));
                                  break;
                         }
                         break;
 
-                    case 2:
-                        System.out.println(messages.getString("21i"));
-                        System.out.println(messages.getString("22o"));
-                        System.out.println(messages.getString("23i"));
-                        System.out.println(messages.getString("24e"));
-                        System.out.println(messages.getString("25r"));
-                        System.out.println(messages.getString("26r"));
-                        System.out.println(messages.getString("27l"));
-                        System.out.println(messages.getString("28v"));
-
+                    case 2://livro
+                        System.out.println(messages.getString("21i"));//adiciona
+                        System.out.println(messages.getString("22o"));//ordena
+                        System.out.println(messages.getString("23i"));//imprime
+                        System.out.println(messages.getString("24e"));//empresta
+                        System.out.println(messages.getString("25r"));//recebe
+                        System.out.println(messages.getString("26r"));//remove
+                        System.out.println(messages.getString("27l"));//informacoes sobre o livro
+                        System.out.println(messages.getString("28v"));//voltar
+                        
+                        //caso o usuario nao escolha um inteiro, estamos tratando isso aqui
                         if(s.hasNextInt())
                         {
                             escolha = s.nextInt();
@@ -220,61 +216,71 @@ public class Main
                         }
                         switch (escolha)
                         {
-                             case 1:
+                             case 1://adiciona
                                  System.out.println(messages.getString("dtl1"));
 
-                                 str = u.nextLine();
+                                 str = u.nextLine();//titulo
                                  
                                  System.out.println(messages.getString("autorP"));
-                                 str2 = u.nextLine();
+                                 str2 = u.nextLine();//autor
                                  
                                  System.out.println(messages.getString("editoraP"));
-                                 str3 = u.nextLine();
+                                 str3 = u.nextLine();//editora
                                  
                                  System.out.println(messages.getString("anoP"));
-                                 ano = s.nextInt();
+                                 while(!s.hasNextInt())
+                                 {
+                                     str4 = s.nextLine();
+                                 }                                     
+                                 ano = s.nextInt();//ano
 
                                  System.out.println(messages.getString("tl"));
                                  System.out.println(messages.getString("tl1"));
                                  System.out.println(messages.getString("tl2"));
-
-                                 escolha = s.nextInt();
-                                 
+                                 while(!s.hasNextInt())
+                                 {
+                                     str4 = s.nextLine();
+                                 }
+                                 escolha = s.nextInt(); //texto ou geral?
                                  
                                  
                                  str4 = null;
                                  
-                                 if(escolha == 1)
+                                 if(escolha == 1)//texto
                                     biblioteca.adicionaLivro(str, false, 0, true, str4, str2, str3, ano);
-                                 else
+                                 else//geral 
                                     biblioteca.adicionaLivro(str, false, 0, false, str4, str2, str3, ano);
 
                                  System.out.println();
                                  break;
 
-                             case 2:
+                             case 2://ordena
 
                                  biblioteca.ordenaListaLivro();
                                  System.out.println(messages.getString("lvos1"));
                                  System.out.println();
                                  break;
 
-                             case 3:
+                             case 3://imprime
 
                                  biblioteca.imprimeLivros();
 
                                  break;
 
 
-                             case 4:
+                             case 4://empresta
 
                                  System.out.println(messages.getString("dnp1"));
-                                 id = t.nextInt();
+                                 while(!t.hasNextInt())
+                                 {
+                                     str4 = t.nextLine();
+                                 }
+                                 id = t.nextInt(); //id
 
                                  biblioteca.numeroAtualDeLivros(id);
 
                                  System.out.println(messages.getString("dtl2"));
-                                 str2 = t.nextLine();
+                                 str2 = t.nextLine(); //titulo do livro
                                  str2 = t.nextLine();
 
                                  biblioteca.emprestarLivro(id, str2);
@@ -282,31 +288,35 @@ public class Main
                                  break;
 
 
-                             case 5:
+                             case 5: //receber
 
                                  System.out.println(messages.getString("dnp2"));
-                                 str = t.nextLine();
+                                 while(!t.hasNextInt())
+                                 {
+                                     str4 = t.nextLine();
+                                 }
+                                 id = t.nextInt(); //id da pessoa
 
-                                 biblioteca.PegarLivrosDoDono(str);
+                                 biblioteca.PegarLivrosDoDono(id);
 
                                  System.out.println(messages.getString("dtl3"));
-                                 str2 = t.nextLine();
+                                 str2 = u.nextLine(); //titulo do livro
 
-                                 biblioteca.devolverLivro(str, str2);
+                                 biblioteca.devolverLivro(id, str2);
                                  System.out.println();
 
                                  break;
 
-                             case 6:
+                             case 6: //remover
                                  System.out.println(messages.getString("dtlr1"));
-                                 str = t.nextLine();
+                                 str = t.nextLine(); //titulo do livro
 
                                  correto = biblioteca.removeLivro(str);
-                                 if(correto)
+                                 if(correto) //mensagem de livro removido
                                  {
                                      System.out.println(messages.getString("lrcs1"));
                                  }
-                                 else
+                                 else //mensagem de livro nao removido
                                  {
                                      System.out.println(messages.getString("err2"));
                                  }
@@ -314,10 +324,10 @@ public class Main
                                  System.out.println();
                                  break;
                                  
-                             case 7:
+                             case 7: //informacoes do livro
                                  biblioteca.verInfoLivrosEmprestados();
 
-                             case 8:
+                             case 8: //voltar
                                  break;
 
                              default:
@@ -326,21 +336,21 @@ public class Main
                         }
                         break;
 
-                    case 3:
+                    case 3: //datas
                         biblioteca.imprimeDatas();
                         System.out.println();
                         break; 
 
-                    case 5:
-                        ciclo = false;
-                        break;
-                        
-                    case 4:
+                    case 4: //historico
                         System.out.println(messages.getString("ih1"));
                         biblioteca.imprimeHistorico();
                         break;
                         
-                    default:
+                    case 5: //sair
+                        ciclo = false;
+                        break;
+                        
+                    default: //mensagem de erro, por nao selecionar um opcao valida
                         
                         System.out.println(messages.getString("eegg"));
                         
@@ -349,7 +359,7 @@ public class Main
             
             }
     
-        
+        //fecha os arquivos
         biblioteca.fechaArquivo(a, b, c, d);
     
     }
