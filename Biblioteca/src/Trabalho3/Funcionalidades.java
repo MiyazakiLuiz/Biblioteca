@@ -111,12 +111,12 @@ public class Funcionalidades
             
                 for(Livro aux : listLivros)
                 {
-                    if(aux.getAtualDono() == null || aux.getAtualDono().equals(rem.getNome()))
+                    if(aux.getAtualDono() == 0 || aux.getAtualDono() == rem.getId())
                     {
                         rem.setNumeroDeLivros(rem.getNumeroDeLivros() - 1);
                         aux.setEmprestado(false);
                         aux.setDias(0);
-                        aux.setAtualDono(str);
+                        aux.setAtualDono(0);
                         
                     }
                 }
@@ -139,7 +139,7 @@ public class Funcionalidades
             System.out.println(messages.getString("readonly"));
             return false;
         }
-        String str;
+        int id;
         Livro rem = null;
         Pessoa rem2 = null;
         
@@ -158,12 +158,12 @@ public class Funcionalidades
         
         if(rem.getEmpr())
         {
-            str = rem.getAtualDono();
+            id = rem.getAtualDono();
             
             
             for(Pessoa aux : listNome)
             {
-                if(str.equals(aux.getNome()))
+                if(id == aux.getId())
                 {
                     aux.setNumeroDeLivros(aux.getNumeroDeLivros() - 1);
                 }
@@ -180,7 +180,7 @@ public class Funcionalidades
     (dias para devolver), texto(true) ou geral(false), nome do dono(null, inicialmente),
     nome do autor, nome da editora e o ano do livro.
     */
-    public void adicionaLivro(String nome, boolean empr, int diasParaDevolver, boolean text, String dono, String autor, String editora, int ano)
+    public void adicionaLivro(String nome, boolean empr, int diasParaDevolver, boolean text, int dono, String autor, String editora, int ano)
     {
         if(this.readOnly == true)
         {
@@ -368,7 +368,7 @@ public class Funcionalidades
                     Livro.setEmprestado(true);
                     Livro.setDias(Pessoa.getlimiteDias());
                     Pessoa.setNumeroDeLivros(Pessoa.getNumeroDeLivros() + 1);
-                    Livro.setAtualDono(Pessoa.getNome());
+                    Livro.setAtualDono(Pessoa.getId());
                     System.out.println(messages.getString("a2les"));
                     this.listHistorico.add(new Historico(this.diaAtual, this.mesAtual, this.anoAtual, 0, 0, 0, Pessoa.getNome(), Livro.getNome()));
                     return true;
@@ -423,25 +423,25 @@ public class Funcionalidades
     public void consultaLivros(int id)
     {
         boolean c = false;
-        String nomePessoa = null;
+        int nomePessoa = 0;
         System.out.println(messages.getString("livrosqueapessoatem"));
         
         for(Pessoa aux : listNome)
         {
             if(aux.getId() == id)
             {
-                nomePessoa = aux.getNome();
+                nomePessoa = aux.getId();
             }
         }
         
-        if(nomePessoa == null)
+        if(nomePessoa == 0)
         {
             return;
         }
       
         for(Livro aux: this.listLivros)
         {
-            if(aux.getAtualDono() != null && aux.getAtualDono().equals(nomePessoa))
+            if(aux.getAtualDono() != 0 && aux.getAtualDono() == (nomePessoa))
             {
                 System.out.println("> " + aux.getNome() + messages.getString("diasrestantes") + aux.getDias());
                 c = true;
@@ -481,7 +481,7 @@ public class Funcionalidades
         
         for (Livro aux : listLivros)
         {
-            if(aux.getNome().equals(nomeLivro) && aux.getAtualDono() != null && Pessoa.getNome().equals(aux.getAtualDono()))
+            if(aux.getNome().equals(nomeLivro) && aux.getAtualDono() != 0 && Pessoa.getId() == aux.getAtualDono())
             {
                 Livro = aux;
                 if(Livro.getEmpr() == true)
@@ -500,7 +500,7 @@ public class Funcionalidades
             {
                 Pessoa.setDiasDeSuspensao(Pessoa.getDiasDeSuspensao() + (Livro.getDias() * -1));
             }
-            Livro.setAtualDono(nulo);
+            Livro.setAtualDono(0);
             Livro.setDias(0);
             Livro.setEmprestado(false);
             
@@ -538,18 +538,18 @@ public class Funcionalidades
     */
     public void PegarLivrosDoDono(int id)
     {
-        String Dono = "nullo";
+        int Dono = 0;
        
         for(Pessoa aux : listNome)
         {
             if(aux.getId() == id)
             {
-                Dono = aux.getNome();
+                Dono = aux.getId();
                 break;
             }
         }
        
-        if(Dono.equals("nullo"))
+        if(Dono == 0)
         {
             return;
         }
@@ -558,7 +558,7 @@ public class Funcionalidades
         
         for(Livro aux : this.listLivros)
         {
-            if(aux.getAtualDono() != null && aux.getAtualDono().equals(Dono))
+            if(aux.getAtualDono() != 0 && aux.getAtualDono() == Dono)
             {
                 System.out.println(aux.getNome() + " - " + aux.getDias() + " " + messages.getString("a2dr"));
             }
@@ -728,7 +728,7 @@ public class Funcionalidades
                     
                 {
                     String[] values = livro.split(",");
-                    listLivros.add(new Livro(values[0], Boolean.parseBoolean(values[1]), Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), values[4], values[5], values[6], Integer.parseInt(values[7])));
+                    listLivros.add(new Livro(values[0], Boolean.parseBoolean(values[1]), Integer.parseInt(values[2]), Boolean.parseBoolean(values[3]), Integer.parseInt(values[4]), values[5], values[6], Integer.parseInt(values[7])));
 		}
 	}
         
@@ -894,7 +894,7 @@ public class Funcionalidades
                     c = true;
                     for(Pessoa aux2 : listNome)
                     {
-                        if(aux.getAtualDono() != null && aux.getAtualDono().equals(aux2.getNome()))
+                        if(aux.getAtualDono() != 0 && aux.getAtualDono() == aux2.getId())
                         {
                             aux2.setSuspenso(true);
                         }

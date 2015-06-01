@@ -247,9 +247,9 @@ public class Main
                                  str4 = null;
                                  
                                  if(escolha == 1)//texto
-                                    biblioteca.adicionaLivro(str, false, 0, true, str4, str2, str3, ano);
+                                    biblioteca.adicionaLivro(str, false, 0, true, 0, str2, str3, ano);
                                  else//geral 
-                                    biblioteca.adicionaLivro(str, false, 0, false, str4, str2, str3, ano);
+                                    biblioteca.adicionaLivro(str, false, 0, false, 0, str2, str3, ano);
 
                                  System.out.println();
                                  break;

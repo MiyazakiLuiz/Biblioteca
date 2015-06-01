@@ -11,9 +11,9 @@ public class Livro
     private boolean emprestado;
     private int diasRestantes;
     private boolean text;
-    private String atualDono;
+    private int atualDono;
 
-    Livro(String a, boolean b, int c, boolean d, String e, String f, String g, int h) 
+    Livro(String a, boolean b, int c, boolean d, int e, String f, String g, int h) 
     {
         this.titulo = a;
         this.emprestado = b;
@@ -29,7 +29,7 @@ public class Livro
     muda o atual dono
     input: atual dono
     */
-    public void setAtualDono(String a)
+    public void setAtualDono(int a)
     {
         this.atualDono = a;
     }
@@ -122,7 +122,7 @@ public class Livro
     retorna o atual dono do livro
     output: atual dono
     */
-    public String getAtualDono()
+    public int getAtualDono()
     {
         return this.atualDono;
     }
