@@ -673,7 +673,7 @@ public class Funcionalidades
     }
     
     /*
-    
+    Prepara a lista de nomes, que e recebida no inicio do programa
     */
     public void preparaListaNome(String listaPessoa)
     {
@@ -715,7 +715,7 @@ public class Funcionalidades
     }
     
     /*
-    
+    Prepara a lista de livro, que e recebida no inicio do programa
     */
     public void preparaListaLivro(String listaLivro)
     {
@@ -744,7 +744,7 @@ public class Funcionalidades
     }
     
     /*
-    
+    Prepara a data antiga, que e recebida no inicio do programa
     */
     public void preparaDataAntiga(String data)
     {
@@ -775,7 +775,7 @@ public class Funcionalidades
     }
     
     /*
-    
+    Prepara a lista de historico, que e recebida no inicio do programa
     */
     public void preparaHistorico(String entregas_retornos)
     {
@@ -811,7 +811,7 @@ public class Funcionalidades
     }
     
     /*
-    
+    Prepara a data atual, que e recebida no inicio do programa
     */
     public void preparaDataAtual()
     {
@@ -858,7 +858,7 @@ public class Funcionalidades
     }
     
     /*
-    
+    Atualiza dias, que testa se algum livro esta em atraso, e testa suspensoes
     */
     public void atualizaDias(int a)
     {
@@ -915,7 +915,7 @@ public class Funcionalidades
     }
     
     /*
-    
+    Opcionalmente, o usuario pode digitar a data no inicio do programa
     */
     public boolean digitaDias()
     {
@@ -949,7 +949,7 @@ public class Funcionalidades
         
     
     /*
-    
+    Construtor de funcionalidades, que prepara as listas, calcula as datas etc
     */
     public Funcionalidades (String listaPessoa, String listaLivro, String data, String entregas_retornos) 
     {
@@ -1108,6 +1108,9 @@ public class Funcionalidades
        
     }
     
+    /*
+    Funcao de apagar a lista, que infelizmente não funcionou. de qualquer maneira, ela nunca foi usada
+    */
     public final void limpaTela()
     {
         int i;
