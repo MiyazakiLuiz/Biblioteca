@@ -4,7 +4,7 @@
 
 ###Programa criado pelos alunos:
 - Rafael Kenji Nissi - 8937013
-- Luiz/Miguel/Elias/Alexandre/Manoel Massao Miyazaki - 8937080
+- Luiz Massao Miyazaki - 8937080
 
 ####Objetivo: 
 Criar uma biblioteca, que contém as seguintes características:
