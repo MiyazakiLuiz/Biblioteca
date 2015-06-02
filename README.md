@@ -56,4 +56,4 @@ O programa contém vários items a sua escolha para fazer várias ações, como 
 
 OBS: O menu de histórico é o único que é sicronizado coma  data escolhida no início. O resto, como informações da pessoa, estão de acordo com a data mais atual.
 
-
+OBS: Para ter acesso ao arquivo .jar, vá até a pasta dist.
